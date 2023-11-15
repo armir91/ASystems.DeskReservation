@@ -47,7 +47,7 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <select asp-for="SelectedRoleId" class="form-control" asp-items="@Model.Roles.Select(r => new SelectListItem() { Text = r.Name, Value = r.Id.ToString() })">
+                <select asp-for="SelectedRoleId" asp-items="Model.Roles.Select(r => new SelectListItem() { Text = r.Name, Value = r.Id.ToString() })" class=" form-control">
                     <option value="UserId">Select a user role</option>
                 </select>
                 <span asp-validation-for="SelectedRoleId" class="text-danger"></span>

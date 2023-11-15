@@ -180,7 +180,6 @@ namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
             try
             {
                 var result = Activator.CreateInstance<User>();
-
                 result.FirstName = Input.FirstName;
                 result.LastName = Input.LastName;
 
