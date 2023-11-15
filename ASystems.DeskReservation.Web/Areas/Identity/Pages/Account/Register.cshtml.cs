@@ -25,13 +25,15 @@ namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<Role> _roleManager;
 
         public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -39,6 +41,7 @@ namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -102,6 +105,10 @@ namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
 
@@ -109,6 +116,9 @@ namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            var roles = _roleManager.Roles.ToList();
+            ViewData["RoleId"] = new SelectList(roles.Where(r => r.Name != null).ToList(), "Id", "Name");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -126,6 +136,11 @@ namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    var role = _roleManager.FindByIdAsync(Input.Role).Result;
+                    if (role != null)
+                    {
+                        IdentityResult roleresult = await _userManager.AddToRoleAsync(user, role.Name);
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

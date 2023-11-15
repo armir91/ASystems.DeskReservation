@@ -1,6 +1,9 @@
 ﻿@page
 @model RegisterModel
 
+@{
+    var roles = ViewData["RoleId"];
+}
 <style>
     /* Center the form in the middle of the page */
     .row {
@@ -35,6 +38,11 @@
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select asp-for="Input.Role" asp-items="@roles as SelectList" class="form-select" aria-required="true"></select>
+                <label asp-for="Input.Role">Select a user role</label>
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
             </div>
             <div class="form-floating">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
