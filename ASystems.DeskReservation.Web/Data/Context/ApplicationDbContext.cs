@@ -1,4 +1,5 @@
 ﻿using ASystems.DeskReservation.Web.Data.Entities;
+using ASystems.DeskReservation.Web.Data.Seeding;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
         builder.Entity<User>().ToTable("Users");
         builder.Entity<Role>().ToTable("Roles");
 
+        builder.SeedData();
     }
 
 }

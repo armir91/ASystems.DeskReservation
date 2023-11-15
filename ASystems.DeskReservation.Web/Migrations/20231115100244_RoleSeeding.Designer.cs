@@ -4,6 +4,7 @@ using ASystems.DeskReservation.Web.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASystems.DeskReservation.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231115100244_RoleSeeding")]
+    partial class RoleSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.25")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -35,38 +37,6 @@ namespace ASystems.DeskReservation.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Desks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e24bd543-0261-40fb-86f7-ef66c29429ac"),
-                            Name = "Desk1"
-                        },
-                        new
-                        {
-                            Id = new Guid("0cb8262b-ff8e-4d08-b3f5-4212b658f8e7"),
-                            Name = "Desk2"
-                        },
-                        new
-                        {
-                            Id = new Guid("3662bfc3-a4d3-4ca0-8dca-cc2a357fff17"),
-                            Name = "Desk3"
-                        },
-                        new
-                        {
-                            Id = new Guid("0c35170b-87b5-4a6b-8f5f-6c853f6e1b46"),
-                            Name = "Desk4"
-                        },
-                        new
-                        {
-                            Id = new Guid("5cd33a8a-8257-4966-800d-808b6b8695b4"),
-                            Name = "Desk5"
-                        },
-                        new
-                        {
-                            Id = new Guid("a7102e9d-1795-4cff-8782-64c57f136a25"),
-                            Name = "Desk6"
-                        });
                 });
 
             modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.Reservation", b =>
@@ -132,15 +102,15 @@ namespace ASystems.DeskReservation.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ce8cc445-2d2e-bd7f-ea1a-fc51c7c6ad26"),
-                            ConcurrencyStamp = "6be5289f-7037-48fe-b124-760641f7f0fd",
+                            Id = new Guid("b3f46b50-1bb3-4b3c-905b-4c7fc0ca1f92"),
+                            ConcurrencyStamp = "6992df16-9725-48a3-8daf-638271236fd0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("6844d9d3-a402-5942-755d-38e6d163e820"),
-                            ConcurrencyStamp = "c3fde7dc-2d62-46c4-9cc7-35cb23a31d51",
+                            Id = new Guid("a4fb4ff4-b6a2-4416-8d12-7ccb30ce4afe"),
+                            ConcurrencyStamp = "15874bca-51b5-4c36-8a13-5f700ff1d313",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -218,141 +188,6 @@ namespace ASystems.DeskReservation.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("43bd1265-cad9-e0a6-2c99-0b0a82652dca"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1461e353-583f-4083-85d2-710450913d25",
-                            Email = "armir.keta@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Armir",
-                            LastName = "Keta",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ARMIR.KETA@GMAIL.COM",
-                            NormalizedUserName = "ARMIR.KETA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECsPJ3pN8ce1am/fWHucY2tbbwLfTf0p6/FN/pXvZKIUWGSIWb0hOLlBDDxUQ7bDAQ==",
-                            PhoneNumber = "0695586306",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "armir.keta@gmail.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("d7d40ac2-e96f-5977-aa27-a0c99bff6710"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4ebbd7f-8def-4c48-af81-adda8d534fc6",
-                            Email = "user1@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "User1",
-                            LastName = "User1",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "user1@gmail.com",
-                            NormalizedUserName = "user1@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDpIMLdw/wJarC9MameHTQ+od4fwiwaJresC9QLyJCYSl188cMNN0Jaz+CXCMzCDbQ==",
-                            PhoneNumber = "0690000000",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "user1@gmail.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("10e41cc5-24c1-0ea1-0db5-e4b97fc2af39"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1e623d59-d80a-449d-af00-07e34f2cba79",
-                            Email = "user2@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "User2",
-                            LastName = "User2",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "user2@gmail.com",
-                            NormalizedUserName = "user2@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIDTG9ABKJYUThPSrBFOFZn33be14zkjBbfPKBKCd7TmlcJmkOr5bdnfR1vAXlK9Vg==",
-                            PhoneNumber = "0690000000",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "user2@gmail.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("8923b3aa-bc22-5ac2-6f60-6eb525ffdc56"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9294afe3-d304-4cf2-83a8-9028afc401e9",
-                            Email = "user3@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "User3",
-                            LastName = "User3",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "user3@gmail.com",
-                            NormalizedUserName = "user3@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC7xMbqUGrJPUU6ZAhK90+earJbeqWX9a9T/EJnZ+nmVQRX7WNkRTWKcrmJlL7NmVQ==",
-                            PhoneNumber = "0690000000",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "user3@gmail.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("7f1cf39b-62f0-6a93-96d3-c8bd1f8f2ff3"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "0131c0ad-4763-436c-adb1-0048701cfcb1",
-                            Email = "user4@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "User4",
-                            LastName = "User4",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "user4@gmail.com",
-                            NormalizedUserName = "user4@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELLMeIvz2gXWjTn2OSRWkZ9PYHFTfVWp7sxix/0cuOwMCXGMmAmzvLYpTVScYk0AFA==",
-                            PhoneNumber = "0690000000",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "user4@gmail.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("b0974dc7-ae1e-7e25-44aa-9d5bade97baf"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "926361d7-ae26-4e64-8cd6-bb91d47d7cdc",
-                            Email = "user5@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "User5",
-                            LastName = "User5",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "user5@gmail.com",
-                            NormalizedUserName = "user5@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJaaAh9p53WXnYuWVmrMF2gZ7Z5FaYENoFFG8FC+c7ETbQY417v6zAlJT/ZDMbF9dA==",
-                            PhoneNumber = "0690000000",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "user5@gmail.com"
-                        },
-                        new
-                        {
-                            Id = new Guid("2edfef70-b0c9-0786-9795-c442636b55fb"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "621db1ac-31b1-49f8-8fb6-2522e51900b5",
-                            Email = "user6@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "User6",
-                            LastName = "User6",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "user6@gmail.com",
-                            NormalizedUserName = "user6@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP9S5rc+dOceh5KRHVj+gJni9+PHdWSOZUZV7t5IWtcFMa2O4cCeE4nLAvjGSgGOgg==",
-                            PhoneNumber = "0690000000",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "user6@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -437,43 +272,6 @@ namespace ASystems.DeskReservation.Web.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("43bd1265-cad9-e0a6-2c99-0b0a82652dca"),
-                            RoleId = new Guid("ce8cc445-2d2e-bd7f-ea1a-fc51c7c6ad26")
-                        },
-                        new
-                        {
-                            UserId = new Guid("d7d40ac2-e96f-5977-aa27-a0c99bff6710"),
-                            RoleId = new Guid("6844d9d3-a402-5942-755d-38e6d163e820")
-                        },
-                        new
-                        {
-                            UserId = new Guid("10e41cc5-24c1-0ea1-0db5-e4b97fc2af39"),
-                            RoleId = new Guid("6844d9d3-a402-5942-755d-38e6d163e820")
-                        },
-                        new
-                        {
-                            UserId = new Guid("8923b3aa-bc22-5ac2-6f60-6eb525ffdc56"),
-                            RoleId = new Guid("6844d9d3-a402-5942-755d-38e6d163e820")
-                        },
-                        new
-                        {
-                            UserId = new Guid("7f1cf39b-62f0-6a93-96d3-c8bd1f8f2ff3"),
-                            RoleId = new Guid("6844d9d3-a402-5942-755d-38e6d163e820")
-                        },
-                        new
-                        {
-                            UserId = new Guid("b0974dc7-ae1e-7e25-44aa-9d5bade97baf"),
-                            RoleId = new Guid("6844d9d3-a402-5942-755d-38e6d163e820")
-                        },
-                        new
-                        {
-                            UserId = new Guid("2edfef70-b0c9-0786-9795-c442636b55fb"),
-                            RoleId = new Guid("6844d9d3-a402-5942-755d-38e6d163e820")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

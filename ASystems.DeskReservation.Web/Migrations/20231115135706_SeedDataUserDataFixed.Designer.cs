@@ -4,6 +4,7 @@ using ASystems.DeskReservation.Web.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASystems.DeskReservation.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231115135706_SeedDataUserDataFixed")]
+    partial class SeedDataUserDataFixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,32 +41,32 @@ namespace ASystems.DeskReservation.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e24bd543-0261-40fb-86f7-ef66c29429ac"),
+                            Id = new Guid("10398b3a-4bf8-4c11-bf1d-dfbacd2f9029"),
                             Name = "Desk1"
                         },
                         new
                         {
-                            Id = new Guid("0cb8262b-ff8e-4d08-b3f5-4212b658f8e7"),
+                            Id = new Guid("22b22603-8add-47c4-9628-230e3b5258f3"),
                             Name = "Desk2"
                         },
                         new
                         {
-                            Id = new Guid("3662bfc3-a4d3-4ca0-8dca-cc2a357fff17"),
+                            Id = new Guid("4e4c9cea-f5f8-41d5-8ed1-69be42990eb0"),
                             Name = "Desk3"
                         },
                         new
                         {
-                            Id = new Guid("0c35170b-87b5-4a6b-8f5f-6c853f6e1b46"),
+                            Id = new Guid("7c45b8b6-66de-4a0a-ab72-848253f5b436"),
                             Name = "Desk4"
                         },
                         new
                         {
-                            Id = new Guid("5cd33a8a-8257-4966-800d-808b6b8695b4"),
+                            Id = new Guid("dfc29186-e73a-4599-9d0e-8fc944a276fd"),
                             Name = "Desk5"
                         },
                         new
                         {
-                            Id = new Guid("a7102e9d-1795-4cff-8782-64c57f136a25"),
+                            Id = new Guid("2b8d1aa8-b1b6-406b-9db3-b80913b44c7d"),
                             Name = "Desk6"
                         });
                 });
@@ -133,14 +135,14 @@ namespace ASystems.DeskReservation.Web.Migrations
                         new
                         {
                             Id = new Guid("ce8cc445-2d2e-bd7f-ea1a-fc51c7c6ad26"),
-                            ConcurrencyStamp = "6be5289f-7037-48fe-b124-760641f7f0fd",
+                            ConcurrencyStamp = "c7ce239c-b53a-450b-8b7a-255d08c7f419",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("6844d9d3-a402-5942-755d-38e6d163e820"),
-                            ConcurrencyStamp = "c3fde7dc-2d62-46c4-9cc7-35cb23a31d51",
+                            ConcurrencyStamp = "dadd79c6-69f4-4dc7-8a50-81260754e6bc",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -224,134 +226,134 @@ namespace ASystems.DeskReservation.Web.Migrations
                         {
                             Id = new Guid("43bd1265-cad9-e0a6-2c99-0b0a82652dca"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1461e353-583f-4083-85d2-710450913d25",
+                            ConcurrencyStamp = "96f45e8c-668e-4de4-851d-dc3a7dfd31a4",
                             Email = "armir.keta@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Armir",
                             LastName = "Keta",
                             LockoutEnabled = false,
                             NormalizedEmail = "ARMIR.KETA@GMAIL.COM",
-                            NormalizedUserName = "ARMIR.KETA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECsPJ3pN8ce1am/fWHucY2tbbwLfTf0p6/FN/pXvZKIUWGSIWb0hOLlBDDxUQ7bDAQ==",
+                            NormalizedUserName = "ARMIRKETA",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFxEr0jXdAJC7OY8j212imKjhXhuZKzqmEVgjb6BuDNJKTKgAE3uhsZXaRhZdwlfDg==",
                             PhoneNumber = "0695586306",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "armir.keta@gmail.com"
+                            UserName = "armirketa"
                         },
                         new
                         {
                             Id = new Guid("d7d40ac2-e96f-5977-aa27-a0c99bff6710"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4ebbd7f-8def-4c48-af81-adda8d534fc6",
+                            ConcurrencyStamp = "e0f00a56-9162-4918-a722-27b0ba995e95",
                             Email = "user1@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User1",
                             LastName = "User1",
                             LockoutEnabled = false,
                             NormalizedEmail = "user1@gmail.com",
-                            NormalizedUserName = "user1@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDpIMLdw/wJarC9MameHTQ+od4fwiwaJresC9QLyJCYSl188cMNN0Jaz+CXCMzCDbQ==",
+                            NormalizedUserName = "user1user1",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMoWRBg1WA7H4hb5I2QZcngweI7g4/LZUm90gJBj1oHrvmPxyU58A0Bnz26Uw6/mPQ==",
                             PhoneNumber = "0690000000",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "user1@gmail.com"
+                            UserName = "user1user1"
                         },
                         new
                         {
                             Id = new Guid("10e41cc5-24c1-0ea1-0db5-e4b97fc2af39"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1e623d59-d80a-449d-af00-07e34f2cba79",
+                            ConcurrencyStamp = "aa5f8f43-3bf6-4c8c-8dfd-29665089292e",
                             Email = "user2@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User2",
                             LastName = "User2",
                             LockoutEnabled = false,
                             NormalizedEmail = "user2@gmail.com",
-                            NormalizedUserName = "user2@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIDTG9ABKJYUThPSrBFOFZn33be14zkjBbfPKBKCd7TmlcJmkOr5bdnfR1vAXlK9Vg==",
+                            NormalizedUserName = "user2user2",
+                            PasswordHash = "AQAAAAEAACcQAAAAECWaDLopn1IRduG6d52DFymearv1XGzQhqdRwXwmFYHGWe8SgyZvl5xwOo4/NIzVAg==",
                             PhoneNumber = "0690000000",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "user2@gmail.com"
+                            UserName = "user2user2"
                         },
                         new
                         {
                             Id = new Guid("8923b3aa-bc22-5ac2-6f60-6eb525ffdc56"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9294afe3-d304-4cf2-83a8-9028afc401e9",
+                            ConcurrencyStamp = "e7040064-6caf-4a3c-8d56-0088a3002005",
                             Email = "user3@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User3",
                             LastName = "User3",
                             LockoutEnabled = false,
                             NormalizedEmail = "user3@gmail.com",
-                            NormalizedUserName = "user3@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC7xMbqUGrJPUU6ZAhK90+earJbeqWX9a9T/EJnZ+nmVQRX7WNkRTWKcrmJlL7NmVQ==",
+                            NormalizedUserName = "user3user3",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEKnZFVWCstuGmecgrEFxoORR99X6zGYQwPcoWyRo0cy15yvST2U4Gv8Zb3dBZevWw==",
                             PhoneNumber = "0690000000",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "user3@gmail.com"
+                            UserName = "user3user3"
                         },
                         new
                         {
                             Id = new Guid("7f1cf39b-62f0-6a93-96d3-c8bd1f8f2ff3"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0131c0ad-4763-436c-adb1-0048701cfcb1",
+                            ConcurrencyStamp = "e6df462e-3166-4dbf-9f6e-785f762f8775",
                             Email = "user4@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User4",
                             LastName = "User4",
                             LockoutEnabled = false,
                             NormalizedEmail = "user4@gmail.com",
-                            NormalizedUserName = "user4@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELLMeIvz2gXWjTn2OSRWkZ9PYHFTfVWp7sxix/0cuOwMCXGMmAmzvLYpTVScYk0AFA==",
+                            NormalizedUserName = "user4user4",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDrKfn7mZLQnUgP5F4eMUCnMTUhiq5du1ih8YxJcEwqZ8fI6GL3GGD0kpVC1aSacrw==",
                             PhoneNumber = "0690000000",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "user4@gmail.com"
+                            UserName = "user4user4"
                         },
                         new
                         {
                             Id = new Guid("b0974dc7-ae1e-7e25-44aa-9d5bade97baf"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "926361d7-ae26-4e64-8cd6-bb91d47d7cdc",
+                            ConcurrencyStamp = "36dc5553-1a92-458c-a6ef-00e3a0e32e91",
                             Email = "user5@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User5",
                             LastName = "User5",
                             LockoutEnabled = false,
                             NormalizedEmail = "user5@gmail.com",
-                            NormalizedUserName = "user5@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJaaAh9p53WXnYuWVmrMF2gZ7Z5FaYENoFFG8FC+c7ETbQY417v6zAlJT/ZDMbF9dA==",
+                            NormalizedUserName = "user5user5",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDm4gIPHMWqkmwZuQ2LCdhUBzTbTkVuAvgxSy5Nkj3s1ncolkYyeWWFAcdRARpU+Bg==",
                             PhoneNumber = "0690000000",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "user5@gmail.com"
+                            UserName = "user5user5"
                         },
                         new
                         {
                             Id = new Guid("2edfef70-b0c9-0786-9795-c442636b55fb"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "621db1ac-31b1-49f8-8fb6-2522e51900b5",
+                            ConcurrencyStamp = "cc1df919-8c56-434d-908c-62aef8541cb3",
                             Email = "user6@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "User6",
                             LastName = "User6",
                             LockoutEnabled = false,
                             NormalizedEmail = "user6@gmail.com",
-                            NormalizedUserName = "user6@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP9S5rc+dOceh5KRHVj+gJni9+PHdWSOZUZV7t5IWtcFMa2O4cCeE4nLAvjGSgGOgg==",
+                            NormalizedUserName = "user6user6",
+                            PasswordHash = "AQAAAAEAACcQAAAAELS16pNZcMAGSZ+1bLEnajgXDgZ5FrXZ33gmoBOp875Os5ksYI3XcD0nXObD2blC0g==",
                             PhoneNumber = "0690000000",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "user6@gmail.com"
+                            UserName = "user6user6"
                         });
                 });
 
