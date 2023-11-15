@@ -12,19 +12,19 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASystems.DeskReservation.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231114221115_Initial")]
-    partial class Initial
+    [Migration("20231115091210_UpdateTableNames")]
+    partial class UpdateTableNames
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.22")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Desk", b =>
+            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.Desk", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace ASystems.DeskReservation.Web.Migrations
                     b.ToTable("Desks");
                 });
 
-            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Reservation", b =>
+            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.Reservation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +72,7 @@ namespace ASystems.DeskReservation.Web.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Role", b =>
+            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,10 +97,10 @@ namespace ASystems.DeskReservation.Web.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
                 });
 
-            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.User", b =>
+            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,7 +171,7 @@ namespace ASystems.DeskReservation.Web.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -277,15 +277,15 @@ namespace ASystems.DeskReservation.Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Reservation", b =>
+            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.Reservation", b =>
                 {
-                    b.HasOne("ASystems.DeskReservation.Web.Data.Desk", "Desk")
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.Desk", "Desk")
                         .WithMany("Reservations")
                         .HasForeignKey("DeskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ASystems.DeskReservation.Web.Data.User", "User")
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.User", "User")
                         .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -298,7 +298,7 @@ namespace ASystems.DeskReservation.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("ASystems.DeskReservation.Web.Data.Role", null)
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -307,7 +307,7 @@ namespace ASystems.DeskReservation.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("ASystems.DeskReservation.Web.Data.User", null)
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -316,7 +316,7 @@ namespace ASystems.DeskReservation.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("ASystems.DeskReservation.Web.Data.User", null)
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -325,13 +325,13 @@ namespace ASystems.DeskReservation.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("ASystems.DeskReservation.Web.Data.Role", null)
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ASystems.DeskReservation.Web.Data.User", null)
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -340,19 +340,19 @@ namespace ASystems.DeskReservation.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("ASystems.DeskReservation.Web.Data.User", null)
+                    b.HasOne("ASystems.DeskReservation.Web.Data.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Desk", b =>
+            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.Desk", b =>
                 {
                     b.Navigation("Reservations");
                 });
 
-            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.User", b =>
+            modelBuilder.Entity("ASystems.DeskReservation.Web.Data.Entities.User", b =>
                 {
                     b.Navigation("Reservations");
                 });

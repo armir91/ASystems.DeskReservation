@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using ASystems.DeskReservation.Web.Data;
+using ASystems.DeskReservation.Web.Data.Entities;
 
 namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
 {

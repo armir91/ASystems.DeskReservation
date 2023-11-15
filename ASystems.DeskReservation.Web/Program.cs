@@ -1,4 +1,5 @@
-using ASystems.DeskReservation.Web.Data;
+using ASystems.DeskReservation.Web.Data.Context;
+using ASystems.DeskReservation.Web.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

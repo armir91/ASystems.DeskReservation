@@ -1,4 +1,4 @@
-﻿namespace ASystems.DeskReservation.Web.Data;
+﻿namespace ASystems.DeskReservation.Web.Data.Entities;
 
 public class Reservation
 {
@@ -14,7 +14,7 @@ public class Reservation
     public Desk Desk { get; set; }
 }
 
-public enum ReservationStatus 
+public enum ReservationStatus
 {
     Pending,
     Approved

@@ -1,4 +1,4 @@
-﻿namespace ASystems.DeskReservation.Web.Data;
+﻿namespace ASystems.DeskReservation.Web.Data.Entities;
 
 public class Desk
 {

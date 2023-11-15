@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ASystems.DeskReservation.Web.Data;
+using ASystems.DeskReservation.Web.Data.Entities;
 
 namespace ASystems.DeskReservation.Web.Areas.Identity.Pages.Account
 {
