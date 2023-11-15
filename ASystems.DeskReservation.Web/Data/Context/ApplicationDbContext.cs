@@ -7,6 +7,7 @@ namespace ASystems.DeskReservation.Web.Data.Context;
 
 public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 {
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
