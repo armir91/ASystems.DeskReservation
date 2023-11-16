@@ -1,8 +1,12 @@
 using ASystems.DeskReservation.Web.Data.Context;
 using ASystems.DeskReservation.Web.Data.Entities;
-using ASystems.DeskReservation.Web.Data.Seeding;
+using ASystems.DeskReservation.Web.Repo.Implementations;
+using ASystems.DeskReservation.Web.Repo.Interfaces;
+using ASystems.DeskReservation.Web.Services.Implementations;
+using ASystems.DeskReservation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,20 +20,19 @@ builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfir
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddRazorPages();
+
+
+builder.Services.AddScoped<IDeskRepository, DeskRepository>();
+builder.Services.AddScoped<IDeskServices, DeskServices>();
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    /*app.UseMigrationsEndPoint();*/
-}
-else
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
