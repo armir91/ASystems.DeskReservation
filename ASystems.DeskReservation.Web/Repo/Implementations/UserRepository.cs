@@ -1,5 +1,7 @@
-﻿namespace ASystems.DeskReservation.Web.Repo.Implementations;
+﻿using ASystems.DeskReservation.Web.Repo.Interfaces;
 
-public class UserRepository
+namespace ASystems.DeskReservation.Web.Repo.Implementations;
+
+public class UserRepository : IUserRepository
 {
 }
