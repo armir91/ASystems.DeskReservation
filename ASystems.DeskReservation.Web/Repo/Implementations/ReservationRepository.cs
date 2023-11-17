@@ -14,40 +14,6 @@ public class ReservationRepository : IReservationRepository
         _context = context;
     }
 
-    // CREATE: Reservation
-    public async Task<Reservation> Create(Reservation reservation)
-    {
-
-        await _context.Reservations.AddAsync(reservation);
-        await _context.SaveChangesAsync();
-
-        return reservation;
-    }
-
-    // DELETE: Reservation
-    public Task<Reservation> Delete(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    // GET: Reservation details
-    public Task<Reservation> Details(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    // EDIT: Reservation
-    public Task<Reservation> Edit(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    
-    public Task<Reservation> Edit(Reservation reservation)
-    {
-        throw new NotImplementedException();
-    }
-
     // GET ALL: Reservations
     public async Task<List<Reservation>> GetAllAsync()
     {
@@ -58,7 +24,55 @@ public class ReservationRepository : IReservationRepository
         return result;
     }
 
-    public Task<Reservation> GetAsync(Guid id)
+    public async Task<Reservation> GetAsync(Guid id)
+    {
+        var result = await _context.Reservations
+                .Include(r => r.Desk)
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+        return result;
+    }
+
+    // CREATE: Reservation
+    public async Task<Reservation> Create(Reservation reservation)
+    {
+        await _context.Reservations.AddAsync(reservation);
+        await _context.SaveChangesAsync();
+        return reservation;
+    }
+
+    // EDIT: Reservation
+    public async Task<Reservation> Edit(Guid id)
+    {
+        var result = await _context.Reservations.FindAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException("There is no reservation found");
+        }
+        return result;
+    }
+
+
+    public async Task<Reservation> Edit(Reservation reservation)
+    {
+        if (reservation == null)
+        {
+            throw new ArgumentException("There is no reservation");
+        }
+        _context.Reservations.Update(reservation);
+        await _context.SaveChangesAsync();
+
+        return reservation;
+    }
+
+    // GET: Reservation details
+    public Task<Reservation> Details(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    // DELETE: Reservation
+    public Task<Reservation> Delete(Guid id)
     {
         throw new NotImplementedException();
     }

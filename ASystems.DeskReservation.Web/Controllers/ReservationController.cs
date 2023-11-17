@@ -51,12 +51,9 @@ namespace ASystems.DeskReservation.Web.Controllers
             return View(reservation);
         }*/
 
-        // GET: Reservations/Create
+        // GET: Reservations/Create Form
         public async Task<IActionResult> Create()
         {
-            /*ViewData["DeskId"] = new SelectList(_deskServices.Desks, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_userServices.Users, "Id", "Id");*/
-
             var usersFirstName = await _userServices.GetAll();
             ViewBag.Users = usersFirstName;
 
@@ -85,59 +82,36 @@ namespace ASystems.DeskReservation.Web.Controllers
         }
 
         // GET: Reservations/Edit/5
-        /* public async Task<IActionResult> Edit(Guid? id)
-         {
-             if (id == null || _context.Reservations == null)
-             {
-                 return NotFound();
-             }
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var usersFirstName = await _userServices.GetAll();
+            ViewBag.Users = usersFirstName;
 
-             var reservation = await _context.Reservations.FindAsync(id);
-             if (reservation == null)
-             {
-                 return NotFound();
-             }
-             ViewData["DeskId"] = new SelectList(_context.Desks, "Id", "Id", reservation.DeskId);
-             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", reservation.UserId);
-             return View(reservation);
-         }*/
+            var desks = await _deskServices.GetAll();
+            ViewBag.Desks = desks;
+
+            var result = await _reservationServices.GetAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return View(result);
+        }
 
         // POST: Reservations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /*   [HttpPost]
-           [ValidateAntiForgeryToken]
-           public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,DeskId,ReservedTime,StartDate,EndDate,Status")] Reservation reservation)
-           {
-               if (id != reservation.Id)
-               {
-                   return NotFound();
-               }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Reservation reservation)
+        {
+            var usersFirstName = await _userServices.GetAll();
+            ViewBag.Users = usersFirstName;
 
-               if (ModelState.IsValid)
-               {
-                   try
-                   {
-                       _context.Update(reservation);
-                       await _context.SaveChangesAsync();
-                   }
-                   catch (DbUpdateConcurrencyException)
-                   {
-                       if (!ReservationExists(reservation.Id))
-                       {
-                           return NotFound();
-                       }
-                       else
-                       {
-                           throw;
-                       }
-                   }
-                   return RedirectToAction(nameof(Index));
-               }
-               ViewData["DeskId"] = new SelectList(_context.Desks, "Id", "Id", reservation.DeskId);
-               ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", reservation.UserId);
-               return View(reservation);
-           }*/
+            var desks = await _deskServices.GetAll();
+            ViewBag.Desks = desks;
+
+            await _reservationServices.Edit(reservation);
+            return RedirectToAction("Index");
+        }
 
         // GET: Reservations/Delete/5
         /*public async Task<IActionResult> Delete(Guid? id)

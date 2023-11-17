@@ -19,9 +19,6 @@ public class DeskController : Controller
     {
         var result = await _deskServices.GetAll();
         return View(result);
-        /*return _context.Desks != null ? 
-                    View(await _context.Desks.ToListAsync()) :
-                    Problem("Entity set 'ApplicationDbContext.Desks'  is null.");*/
     }
 
     // GET: Desks/Details/5

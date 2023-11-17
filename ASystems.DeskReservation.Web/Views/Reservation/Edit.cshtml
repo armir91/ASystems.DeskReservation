@@ -1,8 +1,17 @@
-﻿@model ASystems.DeskReservation.Web.Data.Entities.Reservation
+﻿@using ASystems.DeskReservation.Web.Data.Entities
+@model ASystems.DeskReservation.Web.Data.Entities.Reservation
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var deskNames = ViewBag.Desks;
+    SelectList deskList = new SelectList(deskNames, "Id", "Name");
+
+    var userNames = ViewBag.Users;
+    SelectList userList = new SelectList(userNames, "Id", "FirstName");
+
+    var status = Enum.GetValues(typeof(ReservationStatus));
 }
 
 <h1>Edit</h1>
@@ -16,12 +25,16 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <select asp-for="UserId" class="form-control" asp-items="userList">
+                    <option value="UserId">Select a user name</option>
+                </select>
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DeskId" class="control-label"></label>
-                <select asp-for="DeskId" class="form-control" asp-items="ViewBag.DeskId"></select>
+                <select asp-for="DeskId" class="form-control" asp-items="deskList">
+                    <option value="DeskId">Select a desk</option>
+                </select>
                 <span asp-validation-for="DeskId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,7 +54,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
+                <select asp-for="Status" class="form-control">
+                    <option value="Status">Reservation status</option>
+                    @foreach (var state in status)
+                    {
+                        <option value="@state">@state</option>
+                    }
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
