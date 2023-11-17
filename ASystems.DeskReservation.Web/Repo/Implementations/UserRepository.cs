@@ -14,21 +14,24 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
+    // GET ALL USERS
+    public async Task<List<User>> GetAllAsync()
+    {
+        return await _context.Users.ToListAsync();
+    }
+
+    public Task<User> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    // CREATE NEW USER
     public Task<User> Create(User user)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> Delete(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<User> Details(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
+    // EDIT USER
     public Task<User> Edit(Guid id)
     {
         throw new NotImplementedException();
@@ -39,13 +42,14 @@ public class UserRepository : IUserRepository
         throw new NotImplementedException();
     }
 
-    // GET ALL USERS
-    public async Task<List<User>> GetAllAsync()
+    // USER DETAILS
+    public Task<User> Details(Guid id)
     {
-        return await _context.Users.ToListAsync();
+        throw new NotImplementedException();
     }
 
-    public Task<User> GetAsync(Guid id)
+    // DELETE A USER
+    public Task<User> Delete(Guid id)
     {
         throw new NotImplementedException();
     }

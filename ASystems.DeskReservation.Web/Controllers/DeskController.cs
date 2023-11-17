@@ -21,17 +21,6 @@ public class DeskController : Controller
         return View(result);
     }
 
-    // GET: Desks/Details/5
-    public async Task<IActionResult> Details(Guid id)
-    {
-        var details = await _deskServices.GetAsync(id);
-        if (details == null)
-        {
-            return BadRequest("The user details do not exist.");
-        }
-        return View(details);
-    }
-
     // GET: Desks/Create
     public IActionResult Create()
     {
@@ -47,7 +36,7 @@ public class DeskController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // GET: Desks/Edit/5
+    // GET: Desks/Edit
     public async Task<IActionResult> Edit(Guid id)
     {
         var desk = await _deskServices.GetAsync(id);
@@ -58,7 +47,7 @@ public class DeskController : Controller
         return View(desk);
     }
 
-    // POST: Desks/Edit/5
+    // POST: Desks/Edit
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Desk desk)
@@ -67,7 +56,18 @@ public class DeskController : Controller
         return RedirectToAction("Index");
     }
 
-    // GET: Desks/Delete/5
+    // GET: Desks/Details
+    public async Task<IActionResult> Details(Guid id)
+    {
+        var details = await _deskServices.GetAsync(id);
+        if (details == null)
+        {
+            return BadRequest("The desk details do not exist.");
+        }
+        return View(details);
+    }
+
+    // GET: Desks/Delete
     public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _deskServices.GetAsync(id);
@@ -78,7 +78,7 @@ public class DeskController : Controller
         return View(result);
     }
 
-    // POST: Desks/Delete/5
+    // POST: Desks/Delete
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -90,9 +90,4 @@ public class DeskController : Controller
         }
         return RedirectToAction("Index");
     }
-
-    /*private bool DeskExists(Guid id)
-    {
-        return (_context.Desks?.Any(e => e.Id == id)).GetValueOrDefault();
-    }*/
 }

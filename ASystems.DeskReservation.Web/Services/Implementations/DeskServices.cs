@@ -14,6 +14,7 @@ public class DeskServices : IDeskServices
         _deskRepository = deskRepository;
     }
 
+    // GET ALL DESKS
     public async Task<List<Desk>> GetAll()
     {
         var result = await _deskRepository.GetAllAsync();
@@ -30,11 +31,15 @@ public class DeskServices : IDeskServices
 
         return desk;
     }
+
+    // CREATE A NEW DESK
     public async Task<Desk> Create(Desk desk)
     {
         var result = await _deskRepository.Create(desk);
         return result;
     }
+
+    // EDIT DESK
 
     public async Task<Desk> Edit(Guid id)
     {
@@ -56,16 +61,7 @@ public class DeskServices : IDeskServices
         return await _deskRepository.Edit(desk);
     }
 
-    public async Task<Desk> Delete(Guid id)
-    {
-        var result = await _deskRepository.GetAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException($"The user with the ID: {id} could not be found.");
-        }
-        return await _deskRepository.Delete(id);
-    }
-
+    // DESK DETAILS
     public async Task<Desk> Details(Guid id)
     {
         var result = await _deskRepository.GetAsync(id);
@@ -74,5 +70,16 @@ public class DeskServices : IDeskServices
             throw new ArgumentException($"The desk details could not be found.");
         }
         return await _deskRepository.Details(id);
+    }
+
+    // DELETE DESK
+    public async Task<Desk> Delete(Guid id)
+    {
+        var result = await _deskRepository.GetAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException($"The user with the ID: {id} could not be found.");
+        }
+        return await _deskRepository.Delete(id);
     }
 }

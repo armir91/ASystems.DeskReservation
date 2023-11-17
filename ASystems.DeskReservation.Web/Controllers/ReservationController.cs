@@ -31,26 +31,6 @@ namespace ASystems.DeskReservation.Web.Controllers
             return View(result);
         }
 
-        // GET: Reservations/Details/5
-        /*public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null || _context.Reservations == null)
-            {
-                return NotFound();
-            }
-
-            var reservation = await _context.Reservations
-                .Include(r => r.Desk)
-                .Include(r => r.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (reservation == null)
-            {
-                return NotFound();
-            }
-
-            return View(reservation);
-        }*/
-
         // GET: Reservations/Create Form
         public async Task<IActionResult> Create()
         {
@@ -68,20 +48,17 @@ namespace ASystems.DeskReservation.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Reservation reservation)
         {
-
-
             var usersFirstName = await _userServices.GetAll();
             ViewBag.Users = usersFirstName;
 
             var desks = await _deskServices.GetAll();
             ViewBag.Desks = desks;
 
-
             await _reservationServices.Create(reservation);
             return RedirectToAction("Index");
         }
 
-        // GET: Reservations/Edit/5
+        // GET: Reservations/Edit
         public async Task<IActionResult> Edit(Guid id)
         {
             var usersFirstName = await _userServices.GetAll();
@@ -98,7 +75,7 @@ namespace ASystems.DeskReservation.Web.Controllers
             return View(result);
         }
 
-        // POST: Reservations/Edit/5
+        // POST: Reservations/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Reservation reservation)
@@ -113,30 +90,6 @@ namespace ASystems.DeskReservation.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Reservations/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var result = await _reservationServices.GetAsync(id);
-            if (result == null)
-            {
-                return BadRequest("The desk does not exist.");
-            }
-            return View(result);
-        }
-
-        // POST: Reservations/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var result = await _reservationServices.Delete(id);
-            if (result == null)
-            {
-                return BadRequest("This desk does not exist.");
-            }
-            return RedirectToAction("Index");
-        }
-
         // GET: Reservation/Details
         public async Task<IActionResult> Details(Guid id)
         {
@@ -146,6 +99,30 @@ namespace ASystems.DeskReservation.Web.Controllers
                 return BadRequest("The reservation details could not be found.");
             }
             return View(details);
+        }
+
+        // GET: Reservations/Delete
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _reservationServices.GetAsync(id);
+            if (result == null)
+            {
+                return BadRequest("The reservation does not exist.");
+            }
+            return View(result);
+        }
+
+        // POST: Reservations/Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var result = await _reservationServices.Delete(id);
+            if (result == null)
+            {
+                return BadRequest("This reservation does not exist.");
+            }
+            return RedirectToAction("Index");
         }
     }
 }
