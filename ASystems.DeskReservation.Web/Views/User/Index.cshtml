@@ -22,13 +22,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.NormalizedUserName)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.NormalizedEmail)
             </th>
             <th>
@@ -36,17 +36,17 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
+            </th> *@
+@*             <th>
                 @Html.DisplayNameFor(model => model.SecurityStamp)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
             </th>
             <th>
@@ -60,7 +60,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AccessFailedCount)
-            </th>
+            </th> *@
             <th></th>
         </tr>
     </thead>
@@ -76,13 +76,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
-            <td>
+@*             <td>
                 @Html.DisplayFor(modelItem => item.NormalizedUserName)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
+@*             <td>
                 @Html.DisplayFor(modelItem => item.NormalizedEmail)
             </td>
             <td>
@@ -96,11 +96,11 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
-            <td>
+@*             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
             </td>
             <td>
@@ -114,7 +114,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AccessFailedCount)
-            </td>
+            </td> *@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
