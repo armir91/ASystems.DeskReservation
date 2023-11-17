@@ -57,14 +57,24 @@ public class ReservationServices : IReservationServices
     }
 
     // GET RESERVATION DETAILS
-    public Task<Reservation> Details(Guid id)
+    public async Task<Reservation> Details(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _reservationRepository.GetAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException($"The desk details could not be found.");
+        }
+        return await _reservationRepository.Details(id);
     }
 
     // DELETE RESERVATION
-    public Task<Reservation> Delete(Guid id)
+    public async Task<Reservation> Delete(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _reservationRepository.GetAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException($"The user with the ID: {id} could not be found.");
+        }
+        return await _reservationRepository.Delete(id);
     }
 }

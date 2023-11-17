@@ -114,47 +114,38 @@ namespace ASystems.DeskReservation.Web.Controllers
         }
 
         // GET: Reservations/Delete/5
-        /*public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null || _context.Reservations == null)
+            var result = await _reservationServices.GetAsync(id);
+            if (result == null)
             {
-                return NotFound();
+                return BadRequest("The desk does not exist.");
             }
-
-            var reservation = await _context.Reservations
-                .Include(r => r.Desk)
-                .Include(r => r.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (reservation == null)
-            {
-                return NotFound();
-            }
-
-            return View(reservation);
-        }*/
+            return View(result);
+        }
 
         // POST: Reservations/Delete/5
-        /* [HttpPost, ActionName("Delete")]
-         [ValidateAntiForgeryToken]
-         public async Task<IActionResult> DeleteConfirmed(Guid id)
-         {
-             if (_context.Reservations == null)
-             {
-                 return Problem("There are no reservations.");
-             }
-             var reservation = await _context.Reservations.FindAsync(id);
-             if (reservation != null)
-             {
-                 _context.Reservations.Remove(reservation);
-             }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var result = await _reservationServices.Delete(id);
+            if (result == null)
+            {
+                return BadRequest("This desk does not exist.");
+            }
+            return RedirectToAction("Index");
+        }
 
-             await _context.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
-         }
-
-         private bool ReservationExists(Guid id)
-         {
-           return (_context.Reservations?.Any(e => e.Id == id)).GetValueOrDefault();
-         }*/
+        // GET: Reservation/Details
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var details = await _reservationServices.GetAsync(id);
+            if (details == null)
+            {
+                return BadRequest("The reservation details could not be found.");
+            }
+            return View(details);
+        }
     }
 }

@@ -66,14 +66,27 @@ public class ReservationRepository : IReservationRepository
     }
 
     // GET: Reservation details
-    public Task<Reservation> Details(Guid id)
+    public async Task<Reservation> Details(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Reservations.Where((x => x.Id == id)).FirstOrDefaultAsync();
+        if (result == null)
+        {
+            throw new ArgumentException("The desk returned no results.");
+        }
+        return result;
     }
 
     // DELETE: Reservation
-    public Task<Reservation> Delete(Guid id)
+    public async Task<Reservation> Delete(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Reservations.FirstOrDefaultAsync(x => x.Id == id);
+        if (result == null)
+        {
+            throw new ArgumentException("The desk returned no results.");
+        }
+        _context.Reservations.Remove(result);
+        await _context.SaveChangesAsync();
+
+        return result;
     }
 }

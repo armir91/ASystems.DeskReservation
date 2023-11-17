@@ -36,16 +36,16 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
+            @* @Html.DisplayNameFor(model => model.User.FirstName) *@ User:
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
+            @Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Desk)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Desk.Id)
+            @Html.DisplayFor(model => model.Desk.Name)
         </dd>
     </dl>
 </div>
