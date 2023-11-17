@@ -36,6 +36,8 @@ public class ReservationRepository : IReservationRepository
     // CREATE: Reservation
     public async Task<Reservation> Create(Reservation reservation)
     {
+        reservation.ReservedTime = DateTime.Now;
+
         await _context.Reservations.AddAsync(reservation);
         await _context.SaveChangesAsync();
         return reservation;
