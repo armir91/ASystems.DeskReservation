@@ -17,22 +17,8 @@ public class ReservationRepository : IReservationRepository
     // CREATE: Reservation
     public async Task<Reservation> Create(Reservation reservation)
     {
-        /*await _context.Reservations.*/
 
-        /*.Include(x => x.User.Id)
-        .Include(x => x.Desk.Id)
-        .ToListAsync();*/
-        /*await _context.Reservations.AddAsync(reservation);*/
-
-        var result = new Reservation()
-        {
-            Id = Guid.NewGuid(),
-            UserId = reservation.User.Id,
-            DeskId = reservation.User.Id
-            ReservedTime = DateTime.Now
-        };
-
-        await _context.Reservations.AddAsync(result);
+        await _context.Reservations.AddAsync(reservation);
         await _context.SaveChangesAsync();
 
         return reservation;
@@ -63,9 +49,13 @@ public class ReservationRepository : IReservationRepository
     }
 
     // GET ALL: Reservations
-    public Task<List<Reservation>> GetAllAsync()
+    public async Task<List<Reservation>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var result = await _context.Reservations
+            .Include(r => r.Desk)
+            .Include(r => r.User).ToListAsync();
+
+        return result;
     }
 
     public Task<Reservation> GetAsync(Guid id)

@@ -23,12 +23,18 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label"></label>
-                @Html.DropDownListFor(x => x.User.FirstName, userList, "Select a user")
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="userList">
+                    <option value="UserId">Select a user name</option>
+                </select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label"></label>
-                @Html.DropDownListFor(x => x.Desk.Name, deskList, "Select a desk")
+                <label asp-for="DeskId" class="control-label"></label>
+                <select asp-for="DeskId" class="form-control" asp-items="deskList">
+                    <option value="DeskId">Select a desk</option>
+                </select>
+                <span asp-validation-for="DeskId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReservedTime" class="control-label"></label>

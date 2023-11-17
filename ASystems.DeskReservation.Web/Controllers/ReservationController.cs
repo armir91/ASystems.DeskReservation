@@ -25,31 +25,31 @@ namespace ASystems.DeskReservation.Web.Controllers
         }
 
         // GET: Reservations
-        /*public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _reservationServices.Include(r => r.Desk).Include(r => r.User);
-            return View(await applicationDbContext.ToListAsync());
-        }*/
+            var result = await _reservationServices.GetAll();
+            return View(result);
+        }
 
         // GET: Reservations/Details/5
-        /* public async Task<IActionResult> Details(Guid? id)
-         {
-             if (id == null || _context.Reservations == null)
-             {
-                 return NotFound();
-             }
+        /*public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null || _context.Reservations == null)
+            {
+                return NotFound();
+            }
 
-             var reservation = await _context.Reservations
-                 .Include(r => r.Desk)
-                 .Include(r => r.User)
-                 .FirstOrDefaultAsync(m => m.Id == id);
-             if (reservation == null)
-             {
-                 return NotFound();
-             }
+            var reservation = await _context.Reservations
+                .Include(r => r.Desk)
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
 
-             return View(reservation);
-         }*/
+            return View(reservation);
+        }*/
 
         // GET: Reservations/Create
         public async Task<IActionResult> Create()
@@ -57,8 +57,8 @@ namespace ASystems.DeskReservation.Web.Controllers
             /*ViewData["DeskId"] = new SelectList(_deskServices.Desks, "Id", "Name");
             ViewData["UserId"] = new SelectList(_userServices.Users, "Id", "Id");*/
 
-            var users = await _userServices.GetAll();
-            ViewBag.Users = users;
+            var usersFirstName = await _userServices.GetAll();
+            ViewBag.Users = usersFirstName;
 
             var desks = await _deskServices.GetAll();
             ViewBag.Desks = desks;
@@ -72,21 +72,16 @@ namespace ASystems.DeskReservation.Web.Controllers
         public async Task<IActionResult> Create(Reservation reservation)
         {
 
-            /*ViewData["DeskId"] = new SelectList(_deskServices.Desks, "Id", "Id", reservation.DeskId);
-            ViewData["UserId"] = new SelectList(_userServices.Users, "Id", "Id", reservation.UserId);*/
+
+            var usersFirstName = await _userServices.GetAll();
+            ViewBag.Users = usersFirstName;
+
+            var desks = await _deskServices.GetAll();
+            ViewBag.Desks = desks;
+
 
             await _reservationServices.Create(reservation);
-            return RedirectToAction(nameof(Index));
-
-            /*if (ModelState.IsValid)
-            {
-                reservation.Id = Guid.NewGuid();
-                _context.Add(reservation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }*/
-            
-            /*return View(reservation);*/
+            return RedirectToAction("Index");
         }
 
         // GET: Reservations/Edit/5

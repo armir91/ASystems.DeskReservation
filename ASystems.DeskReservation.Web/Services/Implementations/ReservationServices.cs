@@ -45,9 +45,10 @@ public class ReservationServices : IReservationServices
     }
 
     // GET ALL RESERVATIONS
-    public Task<List<Reservation>> GetAll()
+    public async Task<List<Reservation>> GetAll()
     {
-        throw new NotImplementedException();
+        var result = await _reservationRepository.GetAllAsync();
+        return result;
     }
 
     public Task<Reservation> GetAsync(Guid id)
