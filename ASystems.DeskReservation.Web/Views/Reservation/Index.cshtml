@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ReservedTime)
+                @* @Html.DisplayNameFor(model => model.ReservedTime) *@ Reservation Time
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
@@ -23,13 +23,14 @@
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @* @Html.DisplayNameFor(model => model.Status) *@ Reservation Status
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.FirstName) @Html.DisplayNameFor(model => model.User.LastName)
+                @* @Html.DisplayNameFor(model => model.User.FirstName) @Html.DisplayNameFor(model => model.User.LastName) *@
+                Fullname
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Desk.Name)
+                @* @Html.DisplayNameFor(model => model.Desk.Name) *@Desk Name
             </th>
             <th></th>
         </tr>
@@ -50,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                    @Html.DisplayNameFor(modelItem => item.User.FirstName) @Html.DisplayNameFor(modelItem => item.User.LastName)
+                @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Desk.Name)

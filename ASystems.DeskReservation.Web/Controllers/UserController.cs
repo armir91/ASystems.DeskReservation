@@ -7,28 +7,30 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASystems.DeskReservation.Web.Data.Context;
 using ASystems.DeskReservation.Web.Data.Entities;
+using ASystems.DeskReservation.Web.Services.Interfaces;
 
 namespace ASystems.DeskReservation.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserServices _userServices;
 
-        public UserController(ApplicationDbContext context)
+        public UserController(IUserServices userServices)
         {
-            _context = context;
+            _userServices = userServices;
         }
 
         // GET: Users
+        // return a list of all users
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-              return _context.Users != null ? 
-                          View(await _context.Users.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+            var result = await _userServices.GetAll();
+            return View(result);
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+       /* public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Users == null)
             {
@@ -43,18 +45,18 @@ namespace ASystems.DeskReservation.Web.Controllers
             }
 
             return View(user);
-        }
+        }*/
 
         // GET: Users/Create
-        public IActionResult Create()
+        /*public IActionResult Create()
         {
             return View();
-        }
+        }*/
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+       /* [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstName,LastName,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
         {
@@ -66,10 +68,10 @@ namespace ASystems.DeskReservation.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
-        }
+        }*/
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        /*public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Users == null)
             {
@@ -82,12 +84,12 @@ namespace ASystems.DeskReservation.Web.Controllers
                 return NotFound();
             }
             return View(user);
-        }
+        }*/
 
         // POST: Users/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+       /* [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
         {
@@ -117,10 +119,10 @@ namespace ASystems.DeskReservation.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
-        }
+        }*/
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+       /* public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Users == null)
             {
@@ -135,10 +137,10 @@ namespace ASystems.DeskReservation.Web.Controllers
             }
 
             return View(user);
-        }
+        }*/
 
         // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
+       /* [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
@@ -154,11 +156,11 @@ namespace ASystems.DeskReservation.Web.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
-        private bool UserExists(Guid id)
+        /*private bool UserExists(Guid id)
         {
           return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        }*/
     }
 }
