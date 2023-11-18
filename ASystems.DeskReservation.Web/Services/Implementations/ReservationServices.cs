@@ -31,7 +31,6 @@ public class ReservationServices : IReservationServices
     public async Task<Reservation> Create(Reservation reservation)
     {
         var result = await _reservationRepository.Create(reservation);
-  
         return result;
     }
 
