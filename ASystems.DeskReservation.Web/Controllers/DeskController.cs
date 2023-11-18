@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ASystems.DeskReservation.Web.Services.Interfaces;
 using ASystems.DeskReservation.Web.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
+[Authorize]
 public class DeskController : Controller
 {
     private readonly IDeskServices _deskServices;

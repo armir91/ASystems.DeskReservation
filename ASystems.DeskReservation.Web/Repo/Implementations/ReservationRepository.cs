@@ -9,6 +9,7 @@ public class ReservationRepository : IReservationRepository
 {
     private readonly ApplicationDbContext _context;
 
+
     public ReservationRepository(ApplicationDbContext context)
     {
         _context = context;
@@ -19,7 +20,9 @@ public class ReservationRepository : IReservationRepository
     {
         var result = await _context.Reservations
             .Include(r => r.Desk)
-            .Include(r => r.User).ToListAsync();
+            .Include(r => r.User)
+            .ToListAsync();
+            
 
         return result;
     }

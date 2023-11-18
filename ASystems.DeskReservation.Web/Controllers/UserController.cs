@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ASystems.DeskReservation.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class UserController : Controller
 {
     private readonly IUserServices _userServices;
