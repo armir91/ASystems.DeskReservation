@@ -21,9 +21,9 @@ public class ReservationServices : IReservationServices
         return result;
     }
 
-    public Task<Reservation> GetAsync(Guid id)
+    public async Task<Reservation> GetAsync(Guid id)
     {
-        var result = _reservationRepository.GetAsync(id);
+        var result = await _reservationRepository.GetAsync(id);
         return result;
     }
 

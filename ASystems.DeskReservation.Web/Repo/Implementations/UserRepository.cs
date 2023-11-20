@@ -17,7 +17,9 @@ public class UserRepository : IUserRepository
     // GET ALL USERS
     public async Task<List<User>> GetAllAsync()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.Users
+            .OrderBy(x => x.FirstName)
+            .ToListAsync();
     }
 
     public async Task<User> GetAsync(Guid id)
@@ -61,14 +63,27 @@ public class UserRepository : IUserRepository
     }
 
     // USER DETAILS
-    public Task<User> Details(Guid id)
+    public async Task<User> Details(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Users.Where((x => x.Id == id)).FirstOrDefaultAsync();
+        if (result == null)
+        {
+            throw new ArgumentException("No User found.");
+        }
+        return result;
     }
 
     // DELETE A USER
-    public Task<User> Delete(Guid id)
+    public async Task<User> Delete(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        if (result == null)
+        {
+            throw new ArgumentException("No User found.");
+        }
+        _context.Users.Remove(result);
+        await _context.SaveChangesAsync();
+
+        return result;
     }
 }

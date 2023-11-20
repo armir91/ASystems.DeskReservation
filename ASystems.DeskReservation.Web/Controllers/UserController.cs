@@ -25,48 +25,7 @@ public class UserController : Controller
         return View(result);
     }
 
-    // GET: Users/Details/5
-    /* public async Task<IActionResult> Details(Guid? id)
-     {
-         if (id == null || _context.Users == null)
-         {
-             return NotFound();
-         }
-
-         var user = await _context.Users
-             .FirstOrDefaultAsync(m => m.Id == id);
-         if (user == null)
-         {
-             return NotFound();
-         }
-
-         return View(user);
-     }*/
-
-    // GET: Users/Create
-    /*public IActionResult Create()
-    {
-        return View();
-    }*/
-
-    // POST: Users/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    /* [HttpPost]
-     [ValidateAntiForgeryToken]
-     public async Task<IActionResult> Create([Bind("FirstName,LastName,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
-     {
-         if (ModelState.IsValid)
-         {
-             user.Id = Guid.NewGuid();
-             _context.Add(user);
-             await _context.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
-         }
-         return View(user);
-     }*/
-
-    // GET: Users/Edit/5
+    // GET: Users/Edit
     public async Task<IActionResult> Edit(Guid id)
     {
         var result = await _userServices.GetAsync(id);
@@ -77,7 +36,7 @@ public class UserController : Controller
         return View(result);
     }
 
-    // POST: Users/Edit/5
+    // POST: Users/Edit
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(User user)
@@ -86,45 +45,38 @@ public class UserController : Controller
         return RedirectToAction("Index");
     }
 
-    // GET: Users/Delete/5
-    /* public async Task<IActionResult> Delete(Guid? id)
-     {
-         if (id == null || _context.Users == null)
-         {
-             return NotFound();
-         }
-
-         var user = await _context.Users
-             .FirstOrDefaultAsync(m => m.Id == id);
-         if (user == null)
-         {
-             return NotFound();
-         }
-
-         return View(user);
-     }*/
-
-    // POST: Users/Delete/5
-    /* [HttpPost, ActionName("Delete")]
-     [ValidateAntiForgeryToken]
-     public async Task<IActionResult> DeleteConfirmed(Guid id)
-     {
-         if (_context.Users == null)
-         {
-             return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
-         }
-         var user = await _context.Users.FindAsync(id);
-         if (user != null)
-         {
-             _context.Users.Remove(user);
-         }
-
-         await _context.SaveChangesAsync();
-         return RedirectToAction(nameof(Index));
-     }*/
-
-    /*private bool UserExists(Guid id)
+    // GET: Users/Details/5
+    public async Task<IActionResult> Details(Guid id)
     {
-      return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
-    }*/
+        var details = await _userServices.GetAsync(id);
+        if (details == null)
+        {
+            return BadRequest("The User details could not be found.");
+        }
+        return View(details);
+    }
+
+    // GET: Users/Delete
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var result = await _userServices.GetAsync(id);
+        if (result == null)
+        {
+            return BadRequest("The User does not exist.");
+        }
+        return View(result);
+    }
+
+    // POST: Users/Delete
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    {
+        var result = await _userServices.Delete(id);
+        if (result == null)
+        {
+            return BadRequest("This User does not exist.");
+        }
+        return RedirectToAction("Index");
+    }
 }

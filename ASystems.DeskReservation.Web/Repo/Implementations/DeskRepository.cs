@@ -18,7 +18,9 @@ public class DeskRepository : IDeskRepository
     //GET ALL
     public async Task<List<Desk>> GetAllAsync()
     {
-        var result = await _context.Desks.ToListAsync();
+        var result = await _context.Desks
+            .OrderBy(x => x.Name)
+            .ToListAsync();
         return result;
     }
     //GET BY ID
