@@ -1,4 +1,5 @@
 ﻿using ASystems.DeskReservation.Web.Data.Entities;
+using ASystems.DeskReservation.Web.Repo.Implementations;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
 using ASystems.DeskReservation.Web.Services.Interfaces;
 
@@ -20,9 +21,10 @@ public class UserServices : IUserServices
         return result;
     }
 
-    public Task<User> GetAsync(Guid id)
+    public async Task<User> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _userRepository.GetAsync(id);
+        return result;
     }
 
     // CREATE USER
@@ -32,14 +34,23 @@ public class UserServices : IUserServices
     }
 
     // EDIT USER
-    public Task<User> Edit(Guid id)
+    public async Task<User> Edit(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _userRepository.GetAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException("The user could not be found.");
+        }
+        return result;
     }
 
-    public Task<User> Edit(User user)
+    public async Task<User> Edit(User user)
     {
-        throw new NotImplementedException();
+        if (user == null)
+        {
+            throw new ArgumentException("There is no user");
+        }
+        return await _userRepository.Edit(user);
     }
 
     // USER DETAILS
