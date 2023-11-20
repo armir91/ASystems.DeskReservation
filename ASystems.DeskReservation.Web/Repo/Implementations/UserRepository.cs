@@ -20,9 +20,10 @@ public class UserRepository : IUserRepository
         return await _context.Users.ToListAsync();
     }
 
-    public Task<User> GetAsync(Guid id)
+    public async Task<User> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        return result;
     }
 
     // CREATE NEW USER
@@ -32,14 +33,31 @@ public class UserRepository : IUserRepository
     }
 
     // EDIT USER
-    public Task<User> Edit(Guid id)
+    public async Task<User> Edit(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Users.FindAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException("No user found");
+        }
+        return result;
     }
 
-    public Task<User> Edit(User user)
+    public async Task<User> Edit(User user)
     {
-        throw new NotImplementedException();
+        if (user == null)
+        {
+            throw new ArgumentException("No user found");
+        }
+
+        user.UserName = user.Email;
+        user.NormalizedUserName = user.Email.ToUpper();
+        user.NormalizedEmail = user.Email.ToUpper();
+
+         _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+
+        return user;
     }
 
     // USER DETAILS

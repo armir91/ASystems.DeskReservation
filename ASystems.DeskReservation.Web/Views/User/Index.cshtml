@@ -5,12 +5,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    table {
+        border-collapse: collapse;
+        margin: auto;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: center;
+        border: 2px solid #f2a154;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        table th, table td {
+            border: none;
+            padding: 12px;
+            background-color: #f2a154;
+            color: #714B23;
+            font-weight: normal;
+        }
+
+        table th {
+            background-color: #f2a154;
+            color: #f2a154;
+            font-weight: bold;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f8dec6;
+        }
+
+        table tr:hover {
+            background-color: #f6c5a5;
+        }
+</style>
+
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table border-1">
     <thead>
         <tr>
             <th>
@@ -19,9 +56,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.UserName)
-            </th>
+            </th> *@
 @*             <th>
                 @Html.DisplayNameFor(model => model.NormalizedUserName)
             </th> *@
