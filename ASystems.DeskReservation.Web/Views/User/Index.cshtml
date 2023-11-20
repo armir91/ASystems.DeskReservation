@@ -1,4 +1,7 @@
-﻿@model IEnumerable<ASystems.DeskReservation.Web.Data.Entities.User>
+﻿@using ASystems.DeskReservation.Web.Data.Entities
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ASystems.DeskReservation.Web.Data.Entities.User>
+@inject UserManager<User> _userManager;
 
 @{
     ViewData["Title"] = "Index";
@@ -99,7 +102,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.AccessFailedCount)
             </th> *@
-            <th></th>
+            
+            <th>User Role</th>
         </tr>
     </thead>
     <tbody>
@@ -120,6 +124,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
+           @*  <td>
+                @Html.DisplayFor(modelItem => item.Email) 
+            </td> *@
 @*             <td>
                 @Html.DisplayFor(modelItem => item.NormalizedEmail)
             </td>
@@ -153,6 +160,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AccessFailedCount)
             </td> *@
+               @*  <td>
+                    @Html.DisplayFor(modelItem => item.)
+                </td> *@
+                <td>
+                    @_userManager.GetRolesAsync(item).Result.First()
+                </td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-s btn-info">Details</a> |

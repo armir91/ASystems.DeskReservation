@@ -3,6 +3,8 @@ using ASystems.DeskReservation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using ASystems.DeskReservation.Web.Services.Implementations;
 using ASystems.DeskReservation.Web.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using System.Data;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
@@ -10,10 +12,12 @@ namespace ASystems.DeskReservation.Web.Controllers;
 public class UserController : Controller
 {
     private readonly IUserServices _userServices;
+    private readonly UserManager<User> _userManager;
 
-    public UserController(IUserServices userServices)
+    public UserController(IUserServices userServices, UserManager<User> userManager)
     {
         _userServices = userServices;
+        _userManager = userManager;
     }
 
     // GET: Users
@@ -21,8 +25,14 @@ public class UserController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var result = await _userServices.GetAll();
-        return View(result);
+
+        var users = await _userServices.GetAll();
+        /*var userRoles = new List<string>();
+        foreach (var item in users)
+        {
+           userRoles = (List<string>)await _userManager.GetRolesAsync(item);
+        }*/
+        return View(users);
     }
 
     // GET: Users/Edit
