@@ -21,6 +21,7 @@ public class ReservationRepository : IReservationRepository
         var result = await _context.Reservations
             .Include(r => r.Desk)
             .Include(r => r.User)
+            .OrderBy(x => x.ReservedTime)
             .ToListAsync();
             
 

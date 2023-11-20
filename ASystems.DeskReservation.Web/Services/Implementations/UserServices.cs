@@ -54,14 +54,24 @@ public class UserServices : IUserServices
     }
 
     // USER DETAILS
-    public Task<User> Details(Guid id)
+    public async Task<User> Details(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _userRepository.GetAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException("No User details found.");
+        }
+        return await _userRepository.Details(id);
     }
 
     // DELETE USER
-    public Task<User> Delete(Guid id)
+    public async Task<User> Delete(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _userRepository.GetAsync(id);
+        if (result == null)
+        {
+            throw new ArgumentException($"The User with the ID: {id} could not be found.");
+        }
+        return await _userRepository.Delete(id);
     }
 }
