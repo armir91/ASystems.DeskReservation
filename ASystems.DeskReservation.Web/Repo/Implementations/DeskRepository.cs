@@ -20,6 +20,8 @@ public class DeskRepository : IDeskRepository
     {
         var result = await _context.Desks
             .OrderBy(x => x.Name)
+            .Include(x => x.Reservations)
+            .Where(x => !x.Reservations.Any())
             .ToListAsync();
         return result;
     }

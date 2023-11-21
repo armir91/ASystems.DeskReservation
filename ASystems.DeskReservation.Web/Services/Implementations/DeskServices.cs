@@ -17,7 +17,8 @@ public class DeskServices : IDeskServices
     // GET ALL DESKS
     public async Task<List<Desk>> GetAll()
     {
-        var result = await _deskRepository.GetAllAsync();
+        var result = await _deskRepository
+            .GetAllAsync();
         return result;
     }
 
