@@ -20,9 +20,19 @@ public class DeskRepository : IDeskRepository
     {
         var result = await _context.Desks
             .OrderBy(x => x.Name)
-            /*.Include(x => x.Reservations)
-            .Where(x => !x.Reservations.Any())*/
             .ToListAsync();
+        return result;
+    }
+
+    public async Task<List<Desk>> GetFreeDesks(DateTime StartDate, DateTime EndDate)
+    {
+        var result = await _context.Desks
+            .OrderBy(x => x.Name)
+            .Include(x => x.Reservations)
+            .Where(x => !x.Reservations
+            .Any(r => (r.StartDate <= StartDate && r.EndDate >= StartDate) || ((r.StartDate <= EndDate && r.EndDate >= EndDate))))
+            .ToListAsync();
+
         return result;
     }
 

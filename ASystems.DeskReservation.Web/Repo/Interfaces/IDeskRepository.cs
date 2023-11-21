@@ -11,4 +11,5 @@ public interface IDeskRepository
     Task<Desk> Edit(Desk desk);
     Task<Desk> Delete(Guid id);
     Task<Desk> Details(Guid id);
+    Task<List<Desk>> GetFreeDesks(DateTime StartDate, DateTime EndDate);
 }

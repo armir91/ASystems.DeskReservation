@@ -13,7 +13,7 @@ public class ReservationController : Controller
     private readonly IDeskServices _deskServices;
     private readonly IUserServices _userServices;
 
-        public ReservationController(IReservationServices reservationServices, IDeskServices deskServices, IUserServices userServices)
+    public ReservationController(IReservationServices reservationServices, IDeskServices deskServices, IUserServices userServices)
     {
         _reservationServices = reservationServices;
         _deskServices = deskServices;
@@ -36,7 +36,7 @@ public class ReservationController : Controller
     }
 
     // GET: Reservations/Create Form
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create([FromQuery]DateTime? StartDate, [FromQuery]DateTime? EndDate)
     {
         var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var usersFirstName = await _userServices.GetAll();
@@ -50,7 +50,13 @@ public class ReservationController : Controller
             ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
         }
 
-        var desks = await _deskServices.GetAll();
+        var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now;
+        var endDate = EndDate.HasValue ? EndDate.Value : startDate.AddDays(5);
+
+        ViewBag.StartDate = startDate;
+        ViewBag.EndDate = endDate;
+
+        var desks = await _deskServices.GetFreeDesks(startDate, endDate);
         ViewBag.Desks = desks;
 
         return View();
@@ -61,13 +67,23 @@ public class ReservationController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Reservation reservation)
     {
+        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         var usersFirstName = await _userServices.GetAll();
         ViewBag.Users = usersFirstName;
 
         var desks = await _deskServices.GetAll();
         ViewBag.Desks = desks;
 
-        await _reservationServices.Create(reservation);
+        reservation.UserId = Guid.Parse(currentLoggedInUserId);
+        reservation.ReservedTime = DateTime.Now;
+        reservation.Status = ReservationStatus.Pending;
+
+        var createdReservation = await _reservationServices.Create(reservation);
+        if (User.IsInRole("Admin"))
+        {
+            return RedirectToAction("Edit", new {id=createdReservation.Id});
+        }
         return RedirectToAction("Index");
     }
 

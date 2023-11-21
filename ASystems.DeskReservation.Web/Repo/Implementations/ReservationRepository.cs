@@ -2,6 +2,7 @@
 using ASystems.DeskReservation.Web.Data.Entities;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ASystems.DeskReservation.Web.Repo.Implementations;
 
@@ -38,8 +39,6 @@ public class ReservationRepository : IReservationRepository
     // CREATE: Reservation
     public async Task<Reservation> Create(Reservation reservation)
     {
-        reservation.ReservedTime = DateTime.Now;
-
         await _context.Reservations.AddAsync(reservation);
         await _context.SaveChangesAsync();
         return reservation;
