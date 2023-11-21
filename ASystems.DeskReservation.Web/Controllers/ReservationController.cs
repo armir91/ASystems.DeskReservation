@@ -2,6 +2,7 @@
 using ASystems.DeskReservation.Web.Data.Entities;
 using ASystems.DeskReservation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
@@ -22,15 +23,32 @@ public class ReservationController : Controller
     // GET: Reservations
     public async Task<IActionResult> Index()
     {
+        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var result = await _reservationServices.GetAll();
-        return View(result);
+
+        if (User.IsInRole("Admin"))
+        {
+            return View(result);
+        }
+        var loggedInUserData = result.Where(x => x.UserId.ToString() == currentLoggedInUserId).ToList();
+
+        return View(loggedInUserData);
     }
 
     // GET: Reservations/Create Form
     public async Task<IActionResult> Create()
     {
+        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var usersFirstName = await _userServices.GetAll();
-        ViewBag.Users = usersFirstName;
+
+        if (User.IsInRole("Admin"))
+        {
+            ViewBag.Users = usersFirstName;
+        }
+        else
+        {
+            ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+        }
 
         var desks = await _deskServices.GetAll();
         ViewBag.Desks = desks;
@@ -56,8 +74,17 @@ public class ReservationController : Controller
     // GET: Reservations/Edit
     public async Task<IActionResult> Edit(Guid id)
     {
+        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var usersFirstName = await _userServices.GetAll();
-        ViewBag.Users = usersFirstName;
+
+        if (User.IsInRole("Admin"))
+        {
+            ViewBag.Users = usersFirstName;
+        }
+        else
+        {
+            ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+        }
 
         var desks = await _deskServices.GetAll();
         ViewBag.Desks = desks;
