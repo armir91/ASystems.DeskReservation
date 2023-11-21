@@ -83,4 +83,11 @@ public class DeskServices : IDeskServices
         }
         return await _deskRepository.Delete(id);
     }
+
+    public async Task<List<Desk>> GetFreeDesks(DateTime StartDate, DateTime EndDate)
+    {
+        var result = await _deskRepository.GetFreeDesks(StartDate, EndDate);
+
+        return result;
+    }
 }
