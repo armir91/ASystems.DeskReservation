@@ -52,17 +52,20 @@
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control">
-                    <option value="Status">Reservation status</option>
-                    @foreach (var state in status)
-                    {
-                        <option value="@state">@state</option>
-                    }
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
+            @if(User.IsInRole("Admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" class="form-control">
+                        <option value="Status">Reservation status</option>
+                        @foreach (var state in status)
+                        {
+                            <option value="@state">@state</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-s btn-primary" /> |
                 <a asp-action="Index" class="btn btn-s btn-info">Back to List</a>

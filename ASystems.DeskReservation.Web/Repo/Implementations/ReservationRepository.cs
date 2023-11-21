@@ -19,21 +19,19 @@ public class ReservationRepository : IReservationRepository
     public async Task<List<Reservation>> GetAllAsync()
     {
         var result = await _context.Reservations
-            .Include(r => r.Desk)
-            .Include(r => r.User)
+            .Include(x => x.Desk)
+            .Include(x => x.User)
             .OrderBy(x => x.ReservedTime)
             .ToListAsync();
-            
-
         return result;
     }
 
     public async Task<Reservation> GetAsync(Guid id)
     {
         var result = await _context.Reservations
-                .Include(r => r.Desk)
-                .Include(r => r.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(x => x.Desk)
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(x => x.Id == id);
         return result;
     }
 
@@ -51,6 +49,7 @@ public class ReservationRepository : IReservationRepository
     public async Task<Reservation> Edit(Guid id)
     {
         var result = await _context.Reservations.FindAsync(id);
+        
         if (result == null)
         {
             throw new ArgumentException("There is no reservation found");

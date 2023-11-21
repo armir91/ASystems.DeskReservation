@@ -20,15 +20,18 @@ public class DeskRepository : IDeskRepository
     {
         var result = await _context.Desks
             .OrderBy(x => x.Name)
-            .Include(x => x.Reservations)
-            .Where(x => !x.Reservations.Any())
+            /*.Include(x => x.Reservations)
+            .Where(x => !x.Reservations.Any())*/
             .ToListAsync();
         return result;
     }
+
     //GET BY ID
     public async Task<Desk> GetAsync(Guid id)
     {
-        var result = await _context.Desks.FindAsync(id);
+        var result = await _context.Desks
+            .FindAsync(id);
+
         if (result == null)
         {
             throw new ArgumentException("There is no desk");
