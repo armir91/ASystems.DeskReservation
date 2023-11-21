@@ -41,10 +41,12 @@
 		}
 </style>
 <h1>Office Desks:</h1>
-
-<p>
-	<a asp-action="Create" class="btn btn-s btn-primary">Create Desk</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+	<p>
+		<a asp-action="Create" class="btn btn-s btn-primary">Create Desk</a>
+	</p>
+}
 <table class="table col-6 col-md-4">
     <thead class="border-1">
         <tr>
@@ -60,11 +62,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+				@if (User.IsInRole("Admin"))
+				{
+				<td>
 					<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Edit</a> |
 					<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a> |
 					<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-            </td>
+				</td>
+				}
         </tr>
 }
     </tbody>
