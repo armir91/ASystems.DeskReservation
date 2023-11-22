@@ -17,21 +17,45 @@ public class ReservationServices : IReservationServices
     // GET ALL RESERVATIONS
     public async Task<List<Reservation>> GetAll()
     {
-        var result = await _reservationRepository.GetAllAsync();
-        return result;
+        try
+        {
+            var result = await _reservationRepository.GetAllAsync();
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No reservations found.");
+        }
     }
 
     public async Task<Reservation> GetAsync(Guid id)
     {
-        var result = await _reservationRepository.GetAsync(id);
-        return result;
+        try
+        {
+            var result = await _reservationRepository.GetAsync(id);
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException($"The reservation with ID: {id} could not be retrieved.");
+        }
     }
 
     // CREATE Reservation
     public async Task<Reservation> Create(Reservation reservation)
     {
-        var result = await _reservationRepository.Create(reservation);
-        return result;
+        try
+        {
+            var result = await _reservationRepository.Create(reservation);
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The reservation could not be created.");
+        }
     }
 
     // EDIT RESERVATION
@@ -50,7 +74,7 @@ public class ReservationServices : IReservationServices
     {
         if (reservation == null)
         {
-            throw new ArgumentException("There is no desk");
+            throw new ArgumentException("There is no reservation");
         }
         return await _reservationRepository.Edit(reservation);
     }
@@ -61,7 +85,7 @@ public class ReservationServices : IReservationServices
         var result = await _reservationRepository.GetAsync(id);
         if (result == null)
         {
-            throw new ArgumentException($"The desk details could not be found.");
+            throw new ArgumentException("The reservation details could not be found.");
         }
         return await _reservationRepository.Details(id);
     }
@@ -72,7 +96,7 @@ public class ReservationServices : IReservationServices
         var result = await _reservationRepository.GetAsync(id);
         if (result == null)
         {
-            throw new ArgumentException($"The user with the ID: {id} could not be found.");
+            throw new ArgumentException($"The reservation with the ID: {id} could not be found.");
         }
         return await _reservationRepository.Delete(id);
     }

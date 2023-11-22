@@ -19,8 +19,16 @@ public class DeskController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var result = await _deskServices.GetAll();
-        return View(result);
+        try
+        {
+            var result = await _deskServices.GetAll();
+            return View(result);
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desks found.");
+        }
     }
 
     // GET: Desks/Create
@@ -34,8 +42,16 @@ public class DeskController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Desk desk)
     {
-        await _deskServices.Create(desk);
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            await _deskServices.Create(desk);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desk has been created.");
+        }
     }
 
     // GET: Desks/Edit
@@ -54,8 +70,16 @@ public class DeskController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Desk desk)
     {
-        await _deskServices.Edit(desk);
-        return RedirectToAction("Index");
+        try
+        {
+            await _deskServices.Edit(desk);
+            return RedirectToAction("Index");
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desk details found.");
+        }
     }
 
     // GET: Desks/Details

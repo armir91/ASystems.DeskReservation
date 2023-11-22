@@ -19,29 +19,52 @@ public class ReservationRepository : IReservationRepository
     // GET ALL: Reservations
     public async Task<List<Reservation>> GetAllAsync()
     {
-        var result = await _context.Reservations
+        try
+        {
+            var result = await _context.Reservations
             .Include(x => x.Desk)
             .Include(x => x.User)
             .OrderBy(x => x.ReservedTime)
             .ToListAsync();
-        return result;
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("Reservation data could not be retrieved.");
+        }
     }
 
     public async Task<Reservation> GetAsync(Guid id)
     {
-        var result = await _context.Reservations
+        try
+        {
+            var result = await _context.Reservations
                 .Include(x => x.Desk)
                 .Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.Id == id);
-        return result;
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException($"The reservation with ID: {id} could not be retrieved.");
+        }
     }
 
     // CREATE: Reservation
     public async Task<Reservation> Create(Reservation reservation)
     {
-        await _context.Reservations.AddAsync(reservation);
-        await _context.SaveChangesAsync();
-        return reservation;
+        try
+        {
+            await _context.Reservations.AddAsync(reservation);
+            await _context.SaveChangesAsync();
+            return reservation;
+        }
+        catch (Exception)
+        {
+            throw new ArgumentException("The reservation could not be created.");
+        } 
     }
 
     // EDIT: Reservation
@@ -51,7 +74,7 @@ public class ReservationRepository : IReservationRepository
         
         if (result == null)
         {
-            throw new ArgumentException("There is no reservation found");
+            throw new ArgumentException("No reservation found");
         }
         return result;
     }
@@ -61,7 +84,7 @@ public class ReservationRepository : IReservationRepository
     {
         if (reservation == null)
         {
-            throw new ArgumentException("There is no reservation");
+            throw new ArgumentException("No reservation found.");
         }
         _context.Reservations.Update(reservation);
         await _context.SaveChangesAsync();
@@ -75,7 +98,7 @@ public class ReservationRepository : IReservationRepository
         var result = await _context.Reservations.Where((x => x.Id == id)).FirstOrDefaultAsync();
         if (result == null)
         {
-            throw new ArgumentException("The desk returned no results.");
+            throw new ArgumentException("The reservation returned no results.");
         }
         return result;
     }

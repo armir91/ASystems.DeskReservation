@@ -18,22 +18,39 @@ public class DeskRepository : IDeskRepository
     //GET ALL
     public async Task<List<Desk>> GetAllAsync()
     {
-        var result = await _context.Desks
+        try
+        {
+            var result = await _context.Desks
             .OrderBy(x => x.Name)
             .ToListAsync();
-        return result;
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desk records could be retrieved.");
+        }
     }
 
     public async Task<List<Desk>> GetFreeDesks(DateTime StartDate, DateTime EndDate)
     {
-        var result = await _context.Desks
+        try
+        {
+            var result = await _context.Desks
             .OrderBy(x => x.Name)
             .Include(x => x.Reservations)
             .Where(x => !x.Reservations
             .Any(r => (r.StartDate <= StartDate && r.EndDate >= StartDate) || ((r.StartDate <= EndDate && r.EndDate >= EndDate))))
             .ToListAsync();
 
-        return result;
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desks retrieved.");
+        }
+        
     }
 
     //GET BY ID
@@ -51,9 +68,17 @@ public class DeskRepository : IDeskRepository
     // CREATE NEW
     public async Task<Desk> Create(Desk desk)
     {
-        await _context.Desks.AddAsync(desk);
-        await _context.SaveChangesAsync();
-        return (desk);
+        try
+        {
+            await _context.Desks.AddAsync(desk);
+            await _context.SaveChangesAsync();
+            return (desk);
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desk could be created.");
+        }
     }
     // EDIT
     public async Task<Desk> Edit(Guid id)

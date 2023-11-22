@@ -17,9 +17,17 @@ public class DeskServices : IDeskServices
     // GET ALL DESKS
     public async Task<List<Desk>> GetAll()
     {
-        var result = await _deskRepository
+        try
+        {
+            var result = await _deskRepository
             .GetAllAsync();
-        return result;
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desks retrieved.");
+        }
     }
 
     public async Task<Desk> GetAsync(Guid id)
@@ -36,8 +44,16 @@ public class DeskServices : IDeskServices
     // CREATE A NEW DESK
     public async Task<Desk> Create(Desk desk)
     {
-        var result = await _deskRepository.Create(desk);
-        return result;
+        try
+        {
+            var result = await _deskRepository.Create(desk);
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No desk could be created");
+        }
     }
 
     // EDIT DESK
@@ -47,7 +63,7 @@ public class DeskServices : IDeskServices
         var desk = await _deskRepository.GetAsync(id);
         if (desk == null)
         {
-            throw new ArgumentException($"The desk could not be found.");
+            throw new ArgumentException("The desk could not be found.");
         }
 
         return desk;
@@ -68,7 +84,7 @@ public class DeskServices : IDeskServices
         var result = await _deskRepository.GetAsync(id);
         if (result == null)
         {
-            throw new ArgumentException($"The desk details could not be found.");
+            throw new ArgumentException("The desk details could not be found.");
         }
         return await _deskRepository.Details(id);
     }
@@ -86,8 +102,16 @@ public class DeskServices : IDeskServices
 
     public async Task<List<Desk>> GetFreeDesks(DateTime StartDate, DateTime EndDate)
     {
-        var result = await _deskRepository.GetFreeDesks(StartDate, EndDate);
+        try
+        {
+            var result = await _deskRepository.GetFreeDesks(StartDate, EndDate);
 
-        return result;
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No free desks found.");
+        }
     }
 }

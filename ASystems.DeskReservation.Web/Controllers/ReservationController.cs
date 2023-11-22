@@ -23,43 +23,59 @@ public class ReservationController : Controller
     // GET: Reservations
     public async Task<IActionResult> Index()
     {
-        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var result = await _reservationServices.GetAll();
-
-        if (User.IsInRole("Admin"))
+        try
         {
-            return View(result);
-        }
-        var loggedInUserData = result.Where(x => x.UserId.ToString() == currentLoggedInUserId).ToList();
+            var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _reservationServices.GetAll();
 
-        return View(loggedInUserData);
+            if (User.IsInRole("Admin"))
+            {
+                return View(result);
+            }
+            var loggedInUserData = result.Where(x => x.UserId.ToString() == currentLoggedInUserId).ToList();
+
+            return View(loggedInUserData);
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No data retrieved");
+        }
     }
 
     // GET: Reservations/Create Form
     public async Task<IActionResult> Create([FromQuery]DateTime? StartDate, [FromQuery]DateTime? EndDate)
     {
-        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var usersFirstName = await _userServices.GetAll();
-
-        if (User.IsInRole("Admin"))
+        try
         {
-            ViewBag.Users = usersFirstName;
+            var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usersFirstName = await _userServices.GetAll();
+
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.Users = usersFirstName;
+            }
+            else
+            {
+                ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+            }
+
+            var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now;
+            var endDate = EndDate.HasValue ? EndDate.Value : startDate.AddDays(5);
+
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
+
+            var desks = await _deskServices.GetFreeDesks(startDate, endDate);
+            ViewBag.Desks = desks;
+
+            return View();
         }
-        else
+        catch (Exception)
         {
-            ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+
+            throw new ArgumentException("The reservation did not create.");
         }
-
-        var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now;
-        var endDate = EndDate.HasValue ? EndDate.Value : startDate.AddDays(5);
-
-        ViewBag.StartDate = startDate;
-        ViewBag.EndDate = endDate;
-
-        var desks = await _deskServices.GetFreeDesks(startDate, endDate);
-        ViewBag.Desks = desks;
-
-        return View();
     }
 
     // POST: Reservations/Create
@@ -67,50 +83,66 @@ public class ReservationController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Reservation reservation)
     {
-        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        var usersFirstName = await _userServices.GetAll();
-        ViewBag.Users = usersFirstName;
-
-        var desks = await _deskServices.GetAll();
-        ViewBag.Desks = desks;
-
-        reservation.UserId = Guid.Parse(currentLoggedInUserId);
-        reservation.ReservedTime = DateTime.Now;
-        reservation.Status = ReservationStatus.Pending;
-
-        var createdReservation = await _reservationServices.Create(reservation);
-        if (User.IsInRole("Admin"))
+        try
         {
-            return RedirectToAction("Edit", new {id=createdReservation.Id});
+            var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var usersFirstName = await _userServices.GetAll();
+            ViewBag.Users = usersFirstName;
+
+            var desks = await _deskServices.GetAll();
+            ViewBag.Desks = desks;
+
+            reservation.UserId = Guid.Parse(currentLoggedInUserId);
+            reservation.ReservedTime = DateTime.Now;
+            reservation.Status = ReservationStatus.Pending;
+
+            var createdReservation = await _reservationServices.Create(reservation);
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Edit", new { id = createdReservation.Id });
+            }
+            return RedirectToAction("Index");
         }
-        return RedirectToAction("Index");
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The reservation could not be saved in the DataBase.");
+        }
     }
 
     // GET: Reservations/Edit
     public async Task<IActionResult> Edit(Guid id)
     {
-        var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var usersFirstName = await _userServices.GetAll();
-
-        if (User.IsInRole("Admin"))
+        try
         {
-            ViewBag.Users = usersFirstName;
-        }
-        else
-        {
-            ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
-        }
+            var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usersFirstName = await _userServices.GetAll();
 
-        var desks = await _deskServices.GetAll();
-        ViewBag.Desks = desks;
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.Users = usersFirstName;
+            }
+            else
+            {
+                ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+            }
 
-        var result = await _reservationServices.GetAsync(id);
-        if (result == null)
-        {
-            return NotFound();
+            var desks = await _deskServices.GetAll();
+            ViewBag.Desks = desks;
+
+            var result = await _reservationServices.GetAsync(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return View(result);
         }
-        return View(result);
+        catch (Exception)
+        {
+
+            throw new ArgumentException("Could not get the reservation details for modification.");
+        }
     }
 
     // POST: Reservations/Edit
@@ -118,14 +150,22 @@ public class ReservationController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Reservation reservation)
     {
-        var usersFirstName = await _userServices.GetAll();
-        ViewBag.Users = usersFirstName;
+        try
+        {
+            var usersFirstName = await _userServices.GetAll();
+            ViewBag.Users = usersFirstName;
 
-        var desks = await _deskServices.GetAll();
-        ViewBag.Desks = desks;
+            var desks = await _deskServices.GetAll();
+            ViewBag.Desks = desks;
 
-        await _reservationServices.Edit(reservation);
-        return RedirectToAction("Index");
+            await _reservationServices.Edit(reservation);
+            return RedirectToAction("Index");
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No reservation could noy be modified.");
+        }
     }
 
     // GET: Reservation/Details

@@ -66,10 +66,9 @@ using (var serviceScope = app.Services.CreateScope())
         var context = services.GetRequiredService<ApplicationDbContext>();
         context.Database.EnsureCreated();
     }
-    catch (Exception ex)
+    catch (Exception)
     {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred creating the DB.");
+        throw new ArgumentException("An error occurred creating the DB.");
     }
 }
 
