@@ -1,6 +1,19 @@
 ﻿@using ASystems.DeskReservation.Web.Data.Entities
 @model ASystems.DeskReservation.Web.Data.Entities.Reservation
 
+<style>
+    /* Center the form in the middle of the page */
+    .row, h4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-floating {
+        margin-bottom: 10px;
+    }
+</style>
+
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,11 +27,11 @@
     var status = Enum.GetValues(typeof(ReservationStatus));
 }
 
-<h1>Create</h1>
+@* <h1>Create</h1> *@
 
-<h4>Reservation</h4>
-<hr />
+<h4>Create a new Reservation</h4>
 <div class="row">
+    <hr />
     <div class="col-md-4">
         <form asp-action="Create" method="get">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -45,14 +58,16 @@
             </div>
             <hr />
             <div class="form-group">
-                <input type="submit" value="Search" class="btn btn-primary" /> |
-                <a asp-action="Index" class="btn btn-info">Back to List</a>
+                <input type="submit" value="Search" class="btn btn-primary" /> 
+                @* <a asp-action="Index" class="btn btn-info">Back to List</a> *@
             </div>
         </form>
     </div>
+    
 </div>
-<hr />
-<hr />
+<div>
+    <hr/>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">

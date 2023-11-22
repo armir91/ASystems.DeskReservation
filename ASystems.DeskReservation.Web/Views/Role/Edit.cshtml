@@ -1,13 +1,24 @@
 ﻿@model ASystems.DeskReservation.Web.Data.Entities.Role
+<style>
+    /* Center the form in the middle of the page */
+    .row, h4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .form-floating {
+        margin-bottom: 10px;
+    }
+</style>
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h4>Edit Role</h4>
 
-<h4>Role</h4>
+@* <h4>Role</h4> *@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -29,6 +40,7 @@
                 <input asp-for="ConcurrencyStamp" class="form-control" />
                 <span asp-validation-for="ConcurrencyStamp" class="text-danger"></span>
             </div>
+            <hr />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" /> | 
                 <a asp-action="Index" class="btn btn-s btn-info">Back to List</a>

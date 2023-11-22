@@ -1,13 +1,24 @@
 ﻿@model ASystems.DeskReservation.Web.Data.Entities.User
+<style>
+    /* Center the form in the middle of the page */
+    .row, h4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .form-floating {
+        margin-bottom: 10px;
+    }
+</style>
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+@* <h1>Edit</h1> *@
 
-<h4>User</h4>
+<h4>Edit User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -94,6 +105,7 @@
                 <input asp-for="AccessFailedCount" class="form-control" />
                 <span asp-validation-for="AccessFailedCount" class="text-danger"></span>
             </div>
+            <hr />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-s btn-primary" /> | 
                 <a asp-action="Index" class="btn btn-s btn-info">Back to List</a>

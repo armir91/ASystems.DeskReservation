@@ -1,12 +1,23 @@
 ﻿@model ASystems.DeskReservation.Web.Data.Entities.Desk
+<style>
+    /* Center the form in the middle of the page */
+    .row, h4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .form-floating {
+        margin-bottom: 10px;
+    }
+</style>
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Create a new desk</h1>
+<h4>Create a new desk</h4>
 
-<h4>Desk</h4>
+@* <h4>Desk</h4> *@
 <hr />
 <div class="row">
     <div class="col-md-4">
