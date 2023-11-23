@@ -17,20 +17,44 @@ public class RoleServices : IRoleServices
     // GET ALL ROLES
     public async Task<List<Role>> GetAllAsync()
     {
-        var result = await _roleRepository.GetAllAsync();
-        return result;
+        try
+        {
+			var result = await _roleRepository.GetAllAsync();
+			return result;
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No roles could be retrieved.");
+        }
     }
 
     public async Task<Role> GetAsync(Guid id)
     {
-        var result = await _roleRepository.GetAsync(id);
-        return result;
+        try
+        {
+			var result = await _roleRepository.GetAsync(id);
+			return result;
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The role could not be retrieved.");
+        }
     }
     // CREATE ROLE
     public async Task<Role> Create(Role role)
     {
-        var result = await _roleRepository.Create(role);
-        return result;
+        try
+        {
+			var result = await _roleRepository.Create(role);
+			return result;
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The role has not been created.");
+        }
     }
 
     // EDIT ROLE

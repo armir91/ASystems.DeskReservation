@@ -1,6 +1,7 @@
 ﻿using ASystems.DeskReservation.Web.Data.Context;
 using ASystems.DeskReservation.Web.Data.Entities;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASystems.DeskReservation.Web.Repo.Implementations;
@@ -17,39 +18,62 @@ public class RoleRepository : IRoleRepository
     //GET ALL ROLES
     public async Task<List<Role>> GetAllAsync()
     {
-        var result = await _context.Roles
-            .OrderBy(x => x.Name)
-            .ToListAsync();
+        try
+        {
+			var result = await _context.Roles
+			.OrderBy(x => x.Name)
+			.ToListAsync();
 
-        return result;
+			return result;
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No data could be retrieved.");
+        }
     }
 
     public async Task<Role> GetAsync(Guid id)
     {
-        var result = await _context.Roles.FirstOrDefaultAsync(m => m.Id == id);
-        return result;
+        try
+        {
+			var result = await _context.Roles.FirstOrDefaultAsync(m => m.Id == id);
+			return result;
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException($"The role with ID: {id} could no be retrieved");
+        }
     }
 
     //CREATE NEW ROLE
     public async Task<Role> Create(Role role)
     {
-        role.NormalizedName = role.Name.ToUpper();
+        try
+        {
+			role.NormalizedName = role.Name.ToUpper();
 
-        await _context.Roles.AddAsync(role);
-        await _context.SaveChangesAsync();
-        return role;
+			await _context.Roles.AddAsync(role);
+			await _context.SaveChangesAsync();
+			return role;
+		}
+        catch (Exception)
+        {
+            throw new ArgumentException("The role could not be created.");
+        }
     }
 
     // EDIT ROLE
     public async Task<Role> Edit(Guid id)
     {
-        var result = await _context.Roles.FindAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException("No role found");
-        }
-        return result;
-    }
+		var result = await _context.Roles.FindAsync(id);
+		if (result == null)
+		{
+			throw new ArgumentException("No role found");
+		}
+		return result;
+	}
 
     public async Task<Role> Edit(Role role)
     {

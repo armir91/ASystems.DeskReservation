@@ -26,8 +26,16 @@ public class RoleController : Controller
     // GET: Role
     public async Task<IActionResult> Index()
     {
-        var result = await _roleServices.GetAllAsync();
-        return View(result);
+        try
+        {
+			var result = await _roleServices.GetAllAsync();
+			return View(result);
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No data retrieved.");
+        }
     }
 
     // GET: Role/Create
@@ -41,8 +49,16 @@ public class RoleController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Role role)
     {
-        await _roleServices.Create(role);
-        return RedirectToAction("Index");
+        try
+        {
+			await _roleServices.Create(role);
+			return RedirectToAction("Index");
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The role has been created.");
+        }
     }
 
     // GET: Role/Edit/5
@@ -61,8 +77,16 @@ public class RoleController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Role role)
     {
-        await _roleServices.Edit(role);
-        return RedirectToAction("Index");
+        try
+        {
+			await _roleServices.Edit(role);
+			return RedirectToAction("Index");
+		}
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The role details failed to edit.");
+        }
     }
 
     // GET: Role/Details
@@ -95,7 +119,7 @@ public class RoleController : Controller
         var result = await _roleServices.Delete(id);
         if (result == null)
         {
-            return BadRequest("This role does not exist.");
+            return BadRequest("The role does not exist.");
         }
         return RedirectToAction("Index");
     }

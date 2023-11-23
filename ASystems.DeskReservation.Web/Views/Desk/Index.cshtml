@@ -51,9 +51,12 @@
     <thead class="border-1">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @* @Html.DisplayNameFor(model => model.Name) *@ Desk Name
             </th>
+			@if (User.IsInRole("Admin"))
+				{
             <th></th>
+				}
         </tr>
     </thead>
     <tbody>
