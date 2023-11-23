@@ -11,4 +11,5 @@ public interface IReservationServices
     Task<Reservation> Edit(Reservation reservation);
     Task<Reservation> Delete(Guid id);
     Task<Reservation> Details(Guid id);
+    Task<List<Reservation>> GetUserReservations(Guid userId, DateTime startDate, DateTime endDate);
 }
