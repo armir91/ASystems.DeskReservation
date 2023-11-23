@@ -10,11 +10,13 @@ public class UserServices : IUserServices
 {
     private readonly IUserRepository _userRepository;
     private readonly UserManager<User> _userManager;
+    private readonly RoleManager<Role> _roleManager;
 
-    public UserServices(IUserRepository userRepository, UserManager<User> userManager)
+    public UserServices(IUserRepository userRepository, UserManager<User> userManager, RoleManager<Role> roleManager)
     {
         _userRepository = userRepository;
         _userManager = userManager;
+        _roleManager = roleManager;
     }
 
     // GET ALL USERS
@@ -54,18 +56,12 @@ public class UserServices : IUserServices
         {
             throw new ArgumentException("There is no user");
         }
-        string actualRole = (await _userManager.GetRolesAsync(userToEdit)).FirstOrDefault();
 
-        if (actualRole == null)
-        {
-            await _userManager.AddToRoleAsync(userToEdit, actualRole);
-        }
-        else if (!actualRole.Equals(userDto.Role))
-        {
-            await _userManager.RemoveFromRoleAsync(userToEdit, actualRole);
+        var roles = await _userManager.GetRolesAsync(userToEdit);
+        await _userManager.RemoveFromRolesAsync(userToEdit, roles.ToArray());
+        await _userManager.AddToRoleAsync(userToEdit, userDto.RoleName);
 
-            await _userManager.AddToRoleAsync(userToEdit, userDto.Role);
-        }
+        
 
         return await _userRepository.Edit(userToEdit);
     }
@@ -105,5 +101,5 @@ public class UserDto
     public string LastName { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public string Role { get; set; }
+    public string RoleName { get; set; }
 }

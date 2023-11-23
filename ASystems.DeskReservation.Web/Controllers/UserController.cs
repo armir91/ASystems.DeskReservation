@@ -47,9 +47,11 @@ public class UserController : Controller
 
         var userRoles = await _userManager.GetRolesAsync(result);
 
+        var userRoleName = userRoles.FirstOrDefault();
+
         var roleItems = roles.Select(role =>
         new SelectListItem
-            (role.Name, role.Id.ToString(),
+            (role.Name, role.Name,
             userRoles.Any(u => u.Contains(role.Name)
             ))).ToList();
 
@@ -59,7 +61,7 @@ public class UserController : Controller
         {
             return NotFound();
         }
-        return View(result);
+        return View(new UserDto {Id = result.Id, FirstName = result.FirstName, LastName = result.LastName, Email = result.Email, PhoneNumber = result.PhoneNumber, RoleName = userRoleName });
     }
 
     // POST: Users/Edit
