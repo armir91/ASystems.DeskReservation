@@ -5,6 +5,8 @@ using ASystems.DeskReservation.Web.Services.Implementations;
 using ASystems.DeskReservation.Web.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
@@ -13,11 +15,13 @@ public class UserController : Controller
 {
     private readonly IUserServices _userServices;
     private readonly UserManager<User> _userManager;
+    private readonly IRoleServices _roleServices;
 
-    public UserController(IUserServices userServices, UserManager<User> userManager)
+    public UserController(IUserServices userServices, UserManager<User> userManager, IRoleServices roleServices)
     {
         _userServices = userServices;
         _userManager = userManager;
+        _roleServices = roleServices;
     }
 
     // GET: Users
@@ -39,6 +43,18 @@ public class UserController : Controller
     public async Task<IActionResult> Edit(Guid id)
     {
         var result = await _userServices.GetAsync(id);
+        var roles = await _roleServices.GetAllAsync();
+
+        var userRoles = await _userManager.GetRolesAsync(result);
+
+        var roleItems = roles.Select(role =>
+        new SelectListItem
+            (role.Name, role.Id.ToString(),
+            userRoles.Any(u => u.Contains(role.Name)
+            ))).ToList();
+
+        ViewBag.Roles = roleItems;
+
         if (result == null)
         {
             return NotFound();
@@ -49,9 +65,10 @@ public class UserController : Controller
     // POST: Users/Edit
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(User user)
+    public async Task<IActionResult> Edit(UserDto userDto)
     {
-        await _userServices.Edit(user);
+
+        await _userServices.Edit(userDto);
         return RedirectToAction("Index");
     }
 

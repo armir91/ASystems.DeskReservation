@@ -2,16 +2,19 @@
 using ASystems.DeskReservation.Web.Repo.Implementations;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
 using ASystems.DeskReservation.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASystems.DeskReservation.Web.Services.Implementations;
 
 public class UserServices : IUserServices
 {
     private readonly IUserRepository _userRepository;
+    private readonly UserManager<User> _userManager;
 
-    public UserServices(IUserRepository userRepository)
+    public UserServices(IUserRepository userRepository, UserManager<User> userManager)
     {
         _userRepository = userRepository;
+        _userManager = userManager;
     }
 
     // GET ALL USERS
@@ -44,13 +47,27 @@ public class UserServices : IUserServices
         return result;
     }
 
-    public async Task<User> Edit(User user)
+    public async Task<User> Edit(UserDto userDto)
     {
-        if (user == null)
+        var userToEdit = await _userManager.FindByIdAsync(userDto.Id.ToString());
+        if (userToEdit == null)
         {
             throw new ArgumentException("There is no user");
         }
-        return await _userRepository.Edit(user);
+        string actualRole = (await _userManager.GetRolesAsync(userToEdit)).FirstOrDefault();
+
+        if (actualRole == null)
+        {
+            await _userManager.AddToRoleAsync(userToEdit, actualRole);
+        }
+        else if (!actualRole.Equals(userDto.Role))
+        {
+            await _userManager.RemoveFromRoleAsync(userToEdit, actualRole);
+
+            await _userManager.AddToRoleAsync(userToEdit, userDto.Role);
+        }
+
+        return await _userRepository.Edit(userToEdit);
     }
 
     // USER DETAILS
@@ -74,4 +91,19 @@ public class UserServices : IUserServices
         }
         return await _userRepository.Delete(id);
     }
+
+    public Task<User> Edit(User user)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class UserDto
+{
+    public Guid Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Role { get; set; }
 }
