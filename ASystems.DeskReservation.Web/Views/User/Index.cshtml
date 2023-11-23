@@ -164,7 +164,7 @@
                     @Html.DisplayFor(modelItem => item.)
                 </td> *@
                 <td>
-                    @_userManager.GetRolesAsync(item).Result.First()
+                    @_userManager.GetRolesAsync(item).Result.FirstOrDefault()
                 </td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a> |
