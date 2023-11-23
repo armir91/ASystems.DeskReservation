@@ -100,4 +100,11 @@ public class ReservationServices : IReservationServices
         }
         return await _reservationRepository.Delete(id);
     }
+
+    public async Task<List<Reservation>> GetUserReservations(Guid userId, DateTime startDate, DateTime endDate)
+    {
+        var result = await _reservationRepository.GetUserReservations(userId, startDate, endDate);
+
+        return result;
+    }
 }

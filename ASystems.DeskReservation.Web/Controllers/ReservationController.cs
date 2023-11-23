@@ -3,6 +3,7 @@ using ASystems.DeskReservation.Web.Data.Entities;
 using ASystems.DeskReservation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
@@ -63,13 +64,17 @@ public class ReservationController : Controller
             var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now;
             var endDate = EndDate.HasValue ? EndDate.Value : startDate.AddDays(5);
 
-            ViewBag.StartDate = startDate;
-            ViewBag.EndDate = endDate;
 
             var desks = await _deskServices.GetFreeDesks(startDate, endDate);
             ViewBag.Desks = desks;
 
-            return View();
+            var model = new Reservation()
+            {
+                StartDate = startDate,
+                EndDate = endDate
+            };
+
+            return View(model);
         }
         catch (Exception)
         {
@@ -87,11 +92,29 @@ public class ReservationController : Controller
         {
             var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var usersFirstName = await _userServices.GetAll();
-            ViewBag.Users = usersFirstName;
+            var existingReservations = await _reservationServices.GetUserReservations(Guid.Parse(currentLoggedInUserId), reservation.StartDate, reservation.EndDate);
 
-            var desks = await _deskServices.GetAll();
-            ViewBag.Desks = desks;
+            if (existingReservations.Count > 0)
+            {
+                ModelState.AddModelError(string.Empty, "User has already a reservation for the searched days.");
+                /*return RedirectToAction("Create", new {StartDate = reservation.StartDate, EndDate = reservation.EndDate});*/
+
+                var usersFirstName = await _userServices.GetAll();
+
+                if (User.IsInRole("Admin"))
+                {
+                    ViewBag.Users = usersFirstName;
+                }
+                else
+                {
+                    ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+                }
+
+                var desks = await _deskServices.GetFreeDesks(reservation.StartDate, reservation.EndDate);
+                ViewBag.Desks = desks;
+
+                return View(reservation);
+            }
 
             reservation.UserId = Guid.Parse(currentLoggedInUserId);
             reservation.ReservedTime = DateTime.Now;
