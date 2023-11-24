@@ -14,7 +14,7 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    // GET ALL USERS
+    // GET: ALL USERS
     public async Task<List<User>> GetAllAsync()
     {
         return await _context.Users

@@ -1,5 +1,5 @@
 ﻿using ASystems.DeskReservation.Web.Data.Entities;
-using ASystems.DeskReservation.Web.Services.Implementations;
+using ASystems.DeskReservation.Web.Models;
 
 namespace ASystems.DeskReservation.Web.Services.Interfaces;
 
