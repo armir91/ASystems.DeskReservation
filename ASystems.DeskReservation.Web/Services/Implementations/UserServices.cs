@@ -1,4 +1,5 @@
 ﻿using ASystems.DeskReservation.Web.Data.Entities;
+using ASystems.DeskReservation.Web.Models;
 using ASystems.DeskReservation.Web.Repo.Implementations;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
 using ASystems.DeskReservation.Web.Services.Interfaces;
@@ -51,7 +52,9 @@ public class UserServices : IUserServices
 
     public async Task<User> Edit(UserDto userDto)
     {
-        var userToEdit = await _userManager.FindByIdAsync(userDto.Id.ToString());
+        var userToEdit = await _userRepository.GetAsync(userDto.Id);
+
+
         if (userToEdit == null)
         {
             throw new ArgumentException("There is no user");
@@ -61,6 +64,10 @@ public class UserServices : IUserServices
         await _userManager.RemoveFromRolesAsync(userToEdit, roles.ToArray());
         await _userManager.AddToRoleAsync(userToEdit, userDto.RoleName);
 
+        userToEdit.FirstName = userDto.FirstName;
+        userToEdit.LastName = userDto.LastName;
+        userToEdit.Email = userDto.Email;
+        userToEdit.PhoneNumber = userDto.PhoneNumber;
         
 
         return await _userRepository.Edit(userToEdit);
@@ -92,14 +99,4 @@ public class UserServices : IUserServices
     {
         throw new NotImplementedException();
     }
-}
-
-public class UserDto
-{
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string PhoneNumber { get; set; }
-    public string RoleName { get; set; }
 }

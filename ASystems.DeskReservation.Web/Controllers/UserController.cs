@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ASystems.DeskReservation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using ASystems.DeskReservation.Web.Services.Implementations;
 using ASystems.DeskReservation.Web.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
+using ASystems.DeskReservation.Web.Models;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
@@ -43,6 +42,7 @@ public class UserController : Controller
     public async Task<IActionResult> Edit(Guid id)
     {
         var result = await _userServices.GetAsync(id);
+
         var roles = await _roleServices.GetAllAsync();
 
         var userRoles = await _userManager.GetRolesAsync(result);
@@ -61,7 +61,18 @@ public class UserController : Controller
         {
             return NotFound();
         }
-        return View(new UserDto {Id = result.Id, FirstName = result.FirstName, LastName = result.LastName, Email = result.Email, PhoneNumber = result.PhoneNumber, RoleName = userRoleName });
+
+        var userDto = new UserDto()
+        {
+            Id = id,
+            FirstName = result.FirstName,
+            LastName = result.LastName,
+            Email = result.Email,
+            PhoneNumber = result.PhoneNumber,
+            RoleName = userRoleName
+        };
+
+        return View(userDto);
     }
 
     // POST: Users/Edit
