@@ -1,4 +1,7 @@
-﻿@model IEnumerable<ASystems.DeskReservation.Web.Data.Entities.Reservation>
+﻿@using ASystems.DeskReservation.Web.Data.Entities
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ASystems.DeskReservation.Web.Data.Entities.Reservation>
+@inject UserManager<User> _userManager;
 
 @{
     ViewData["Title"] = "Index";
@@ -94,9 +97,11 @@
                 @Html.DisplayFor(modelItem => item.Desk.Name)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-s btn-info">Details</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-s btn-info">Details</a> 
+                    @if(User.IsInRole("Admin")){
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-s btn-danger">Delete</a>
+                    }
             </td>
         </tr>
 }

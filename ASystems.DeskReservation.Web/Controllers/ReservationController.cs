@@ -39,7 +39,6 @@ public class ReservationController : Controller
         }
         catch (Exception)
         {
-
             throw new ArgumentException("No data retrieved");
         }
     }
@@ -61,9 +60,13 @@ public class ReservationController : Controller
                 ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
             }
 
-            var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now;
+            var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now.AddDays(1);
             var endDate = EndDate.HasValue ? EndDate.Value : startDate.AddDays(5);
 
+            if (startDate < startDate.AddDays(-1) || endDate > startDate.AddDays(5))
+            {
+                ModelState.AddModelError(string.Empty, "User cannot book for an already passed date! Also keep in mind that, user cannot book a desk for more than 5 days.");
+            }
 
             var desks = await _deskServices.GetFreeDesks(startDate, endDate);
             ViewBag.Desks = desks;
@@ -79,7 +82,7 @@ public class ReservationController : Controller
         catch (Exception)
         {
 
-            throw new ArgumentException("The reservation did not create.");
+            throw new ArgumentException("The reservation was not created.");
         }
     }
 
@@ -97,7 +100,6 @@ public class ReservationController : Controller
             if (existingReservations.Count > 0)
             {
                 ModelState.AddModelError(string.Empty, "User has already a reservation for the searched days.");
-                /*return RedirectToAction("Create", new {StartDate = reservation.StartDate, EndDate = reservation.EndDate});*/
 
                 var usersFirstName = await _userServices.GetAll();
 
@@ -155,6 +157,7 @@ public class ReservationController : Controller
             ViewBag.Desks = desks;
 
             var result = await _reservationServices.GetAsync(id);
+
             if (result == null)
             {
                 return NotFound();
@@ -187,7 +190,7 @@ public class ReservationController : Controller
         catch (Exception)
         {
 
-            throw new ArgumentException("No reservation could noy be modified.");
+            throw new ArgumentException("The reservation could not be modified.");
         }
     }
 
