@@ -58,7 +58,8 @@ public static class ModelBuilderExtension
             LockoutEnabled = false,
             PhoneNumber = "0695586306",
             PasswordHash = hasher.HashPassword(null, "Admin*123"),
-            SecurityStamp = Guid.NewGuid().ToString()
+            SecurityStamp = Guid.NewGuid().ToString(),
+            CheckedIn = true
         };
         builder.Entity<User>().HasData(user);
 

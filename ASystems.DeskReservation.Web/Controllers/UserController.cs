@@ -69,7 +69,8 @@ public class UserController : Controller
             LastName = result.LastName,
             Email = result.Email,
             PhoneNumber = result.PhoneNumber,
-            RoleName = userRoleName
+            RoleName = userRoleName,
+            CheckedIn = result.CheckedIn
         };
 
         return View(userDto);

@@ -68,6 +68,7 @@ public class UserServices : IUserServices
         userToEdit.LastName = userDto.LastName;
         userToEdit.Email = userDto.Email;
         userToEdit.PhoneNumber = userDto.PhoneNumber;
+        userToEdit.CheckedIn = userDto.CheckedIn;
         
 
         return await _userRepository.Edit(userToEdit);
