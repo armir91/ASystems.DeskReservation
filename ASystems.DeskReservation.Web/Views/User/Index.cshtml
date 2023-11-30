@@ -104,6 +104,7 @@
             </th> *@
             
             <th>User Role</th>
+            <th>User Checked In</th>
         </tr>
     </thead>
     <tbody>
@@ -166,6 +167,7 @@
                 <td>
                     @_userManager.GetRolesAsync(item).Result.FirstOrDefault()
                 </td>
+                <td>@Html.DisplayFor(modelItem => item.CheckedIn)</td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-s btn-info">Details</a> |

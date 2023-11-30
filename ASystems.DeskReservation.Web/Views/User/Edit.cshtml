@@ -20,6 +20,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var roles = ViewBag.Roles;    
+
 }
 
 @* <h1>Edit</h1> *@
@@ -53,6 +54,12 @@
             <div class="form-group">
                 <label asp-for="RoleName"  class="control-label">Role modification</label>
                 <select asp-for="RoleName" class="form-control" asp-items="roles"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    User Checked In
+                    <input class="form-check-input" asp-for="CheckedIn" />
+                </label>
             </div>
             <hr />
             <div class="form-group">
