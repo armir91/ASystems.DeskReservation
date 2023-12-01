@@ -1,17 +1,21 @@
 ﻿using ASystems.DeskReservation.Web.Data.Entities;
+using ASystems.DeskReservation.Web.Models;
 using ASystems.DeskReservation.Web.Repo.Implementations;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
 using ASystems.DeskReservation.Web.Services.Interfaces;
+using AutoMapper;
 
 namespace ASystems.DeskReservation.Web.Services.Implementations;
 
 public class RoleServices : IRoleServices
 {
     private readonly IRoleRepository _roleRepository;
+    private readonly IMapper _mapper;
 
-    public RoleServices(IRoleRepository roleRepository)
+    public RoleServices(IRoleRepository roleRepository, IMapper mapper)
     {
         _roleRepository = roleRepository;
+        _mapper = mapper;
     }
 
     // GET ALL ROLES
@@ -43,13 +47,27 @@ public class RoleServices : IRoleServices
         }
     }
     // CREATE ROLE
-    public async Task<Role> Create(Role role)
+    public async Task<RoleDto> Create(RoleDto roleDto)
     {
         try
         {
-			var result = await _roleRepository.Create(role);
-			return result;
-		}
+            var newRole = new Role()
+            {
+                Id = roleDto.Id,
+                Name = roleDto.Name
+            };
+
+            var result = await _roleRepository.Create(newRole);
+
+            var createdRole = new RoleDto()
+            {
+                Id = result.Id,
+                Name = result.Name
+            };
+
+            return createdRole;
+
+        }
         catch (Exception)
         {
 

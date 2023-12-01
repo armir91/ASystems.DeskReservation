@@ -1,4 +1,4 @@
-﻿@model ASystems.DeskReservation.Web.Data.Entities.Role
+﻿@model ASystems.DeskReservation.Web.Models.RoleDto
 <style>
     /* Center the form in the middle of the page */
     .row, h4 {
@@ -28,16 +28,6 @@
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="NormalizedName" class="control-label"></label>
-                <input asp-for="NormalizedName" class="form-control" />
-                <span asp-validation-for="NormalizedName" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="ConcurrencyStamp" class="control-label"></label>
-                <input asp-for="ConcurrencyStamp" class="form-control" />
-                <span asp-validation-for="ConcurrencyStamp" class="text-danger"></span>
             </div>
             <hr />
             <div class="form-group">

@@ -10,6 +10,7 @@ using ASystems.DeskReservation.Web.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using ASystems.DeskReservation.Web.Services.Interfaces;
 using ASystems.DeskReservation.Web.Services.Implementations;
+using ASystems.DeskReservation.Web.Models;
 
 namespace ASystems.DeskReservation.Web.Controllers;
 
@@ -47,17 +48,17 @@ public class RoleController : Controller
     // POST: Role/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Role role)
+    public async Task<IActionResult> Create(RoleDto roleDto)
     {
         try
         {
-			await _roleServices.Create(role);
+			await _roleServices.Create(roleDto);
 			return RedirectToAction("Index");
 		}
         catch (Exception)
         {
 
-            throw new ArgumentException("The role has been created.");
+            throw new ArgumentException("The role has not been created.");
         }
     }
 
