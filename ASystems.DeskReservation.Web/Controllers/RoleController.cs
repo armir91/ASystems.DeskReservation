@@ -62,7 +62,7 @@ public class RoleController : Controller
         }
     }
 
-    // GET: Role/Edit/5
+    // GET: Role/Edit
     public async Task<IActionResult> Edit(Guid id)
     {
         var result = await _roleServices.GetAsync(id);
@@ -76,11 +76,11 @@ public class RoleController : Controller
     // POST: Role/Edit
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Role role)
+    public async Task<IActionResult> Edit(RoleDto roleDto)
     {
         try
         {
-			await _roleServices.Edit(role);
+			await _roleServices.Edit(roleDto);
 			return RedirectToAction("Index");
 		}
         catch (Exception)

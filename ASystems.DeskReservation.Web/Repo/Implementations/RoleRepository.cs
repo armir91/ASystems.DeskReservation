@@ -81,6 +81,9 @@ public class RoleRepository : IRoleRepository
         {
             throw new ArgumentException("No role found");
         }
+
+        role.NormalizedName = role.Name.ToUpper();
+
         _context.Roles.Update(role);
         await _context.SaveChangesAsync();
 

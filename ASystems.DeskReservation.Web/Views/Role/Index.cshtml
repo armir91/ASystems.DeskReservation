@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ASystems.DeskReservation.Web.Data.Entities.Role>
+﻿@model IEnumerable<ASystems.DeskReservation.Web.Models.RoleDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -53,12 +53,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.NormalizedName)
-            </th>
-            <th hidden>
+            </th> *@
+@*             <th hidden>
                 @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-            </th>
+            </th> *@
             <th>Actions</th>
         </tr>
     </thead>
@@ -68,12 +68,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+@*             <td>
                 @Html.DisplayFor(modelItem => item.NormalizedName)
             </td>
                 <td hidden>
                 @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
-            </td>
+            </td> *@
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-s btn-info">Details</a> |
