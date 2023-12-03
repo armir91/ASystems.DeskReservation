@@ -23,22 +23,16 @@ public class UserController : Controller
         _roleServices = roleServices;
     }
 
-    // GET: Users
+    // GET: User
     // return a list of all users
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-
         var users = await _userServices.GetAll();
-        /*var userRoles = new List<string>();
-        foreach (var item in users)
-        {
-           userRoles = (List<string>)await _userManager.GetRolesAsync(item);
-        }*/
         return View(users);
     }
 
-    // GET: Users/Edit
+    // GET: User/Edit
     public async Task<IActionResult> Edit(Guid id)
     {
         var result = await _userServices.GetAsync(id);
@@ -76,7 +70,7 @@ public class UserController : Controller
         return View(userDto);
     }
 
-    // POST: Users/Edit
+    // POST: User/Edit
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(UserDto userDto)
@@ -86,7 +80,7 @@ public class UserController : Controller
         return RedirectToAction("Index");
     }
 
-    // GET: Users/Details/5
+    // GET: User/Details
     public async Task<IActionResult> Details(Guid id)
     {
         var details = await _userServices.GetAsync(id);
@@ -97,7 +91,7 @@ public class UserController : Controller
         return View(details);
     }
 
-    // GET: Users/Delete
+    // GET: User/Delete
     public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _userServices.GetAsync(id);
@@ -108,7 +102,7 @@ public class UserController : Controller
         return View(result);
     }
 
-    // POST: Users/Delete
+    // POST: User/Delete
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)

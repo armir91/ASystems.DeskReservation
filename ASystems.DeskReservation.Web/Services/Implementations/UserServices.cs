@@ -33,12 +33,6 @@ public class UserServices : IUserServices
         return result;
     }
 
-    // CREATE USER
-    public Task<User> Create(User user)
-    {
-        throw new NotImplementedException();
-    }
-
     // EDIT USER
     public async Task<User> Edit(Guid id)
     {
@@ -94,10 +88,5 @@ public class UserServices : IUserServices
             throw new ArgumentException($"The User with the ID: {id} could not be found.");
         }
         return await _userRepository.Delete(id);
-    }
-
-    public Task<User> Edit(User user)
-    {
-        throw new NotImplementedException();
     }
 }

@@ -6,7 +6,6 @@ public interface IUserRepository
 {
     Task<List<User>> GetAllAsync();
     Task<User> GetAsync(Guid id);
-    Task<User> Create(User user);
     Task<User> Edit(Guid id);
     Task<User> Edit(User user);
     Task<User> Delete(Guid id);

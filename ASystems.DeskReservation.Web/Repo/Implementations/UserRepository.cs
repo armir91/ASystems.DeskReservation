@@ -28,12 +28,6 @@ public class UserRepository : IUserRepository
         return result;
     }
 
-    // CREATE NEW USER
-    public Task<User> Create(User user)
-    {
-        throw new NotImplementedException();
-    }
-
     // EDIT USER
     public async Task<User> Edit(Guid id)
     {
