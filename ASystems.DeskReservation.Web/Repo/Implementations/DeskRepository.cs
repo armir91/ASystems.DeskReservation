@@ -77,7 +77,7 @@ public class DeskRepository : IDeskRepository
         catch (Exception)
         {
 
-            throw new ArgumentException("No desk could be created.");
+            throw new ArgumentException("No desk could not be created.");
         }
     }
     // EDIT
