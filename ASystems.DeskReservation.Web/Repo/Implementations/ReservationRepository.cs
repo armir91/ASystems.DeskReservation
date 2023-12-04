@@ -121,7 +121,7 @@ public class ReservationRepository : IReservationRepository
     {
         var result = await _context.Reservations
             .Where(r => r.UserId == userId &&
-                    ((r.StartDate <= startDate && r.EndDate >= startDate) || (r.StartDate <= endDate && r.EndDate >= endDate)))
+                    r.StartDate < endDate && startDate < r.EndDate)
             .ToListAsync();
 
         return result;
