@@ -22,38 +22,34 @@ public class RoleServices : IRoleServices
     // GET ALL ROLES
     public async Task<List<RoleDto>> GetAllAsync()
     {
-        var result = await _roleRepository.GetAllAsync();
-        var mappedResult = _mapper.Map<List<RoleDto>>(result);
-        return mappedResult;
+        try
+        {
+            var result = await _roleRepository.GetAllAsync();
+            var mappedResult = _mapper.Map<List<RoleDto>>(result);
 
-        /* try
-         {
-             var result = await _roleRepository.GetAllAsync();
-             return result;
-         }
-         catch (Exception)
-         {
+            return mappedResult;
+        }
+        catch (Exception)
+        {
 
-             throw new ArgumentException("No roles could be retrieved.");
-         }*/
+            throw new ArgumentException("No roles retrieved.");
+        }
     }
 
     public async Task<RoleDto> GetAsync(Guid id)
     {
-
-        var result = await _roleRepository.GetAsync(id);
-        var mappedResult = _mapper.Map<RoleDto>(result);
-        return mappedResult;
-        /*try
+        try
         {
-			var result = await _roleRepository.GetAsync(id);
-			return result;
-		}
+            var result = await _roleRepository.GetAsync(id);
+            var mappedResult = _mapper.Map<RoleDto>(result);
+
+            return mappedResult;
+        }
         catch (Exception)
         {
 
-            throw new ArgumentException("The role could not be retrieved.");
-        }*/
+            throw new ArgumentException("No role retrieved.");
+        }
     }
     // CREATE ROLE
     public async Task<RoleDto> Create(RoleDto roleDto)
@@ -84,31 +80,23 @@ public class RoleServices : IRoleServices
         }
     }
 
-    // EDIT ROLE
-    public async Task<RoleDto> Edit(Guid id)
-    {
-        var roleId = await _roleRepository.GetAsync(id);
-        var mappedRoleId = _mapper.Map<RoleDto>(roleId);
-        return mappedRoleId;
-        /*var result = await _roleRepository.GetAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException("No role found.");
-        }*/
-
-        /*return result;*/
-    }
-
     public async Task<RoleDto> Edit(RoleDto roleDto)
     {
-        var mappedRole = _mapper.Map<Role>(roleDto);
-        var updatedRole = await _roleRepository.Edit(mappedRole);
-        var result = _mapper.Map<RoleDto>(updatedRole);
-        
-        return result;
+        try
+        {
+            var updatedRole = await _roleRepository.Edit(roleDto.Id, roleDto.Name);
+            var result = _mapper.Map<RoleDto>(updatedRole);
+
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The role has not been edited.");
+        }
     }
 
-    // ROLE DETAILS
+    // GET: ROLE DETAILS
     public async Task<Role> Details(Guid id)
     {
         var result = await _roleRepository.GetAsync(id);
