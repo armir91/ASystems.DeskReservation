@@ -4,6 +4,7 @@ using ASystems.DeskReservation.Web.Repo.Implementations;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
 using ASystems.DeskReservation.Web.Services.Interfaces;
 using AutoMapper;
+using NuGet.Protocol.Core.Types;
 
 namespace ASystems.DeskReservation.Web.Services.Implementations;
 
@@ -19,31 +20,35 @@ public class RoleServices : IRoleServices
     }
 
     // GET ALL ROLES
-    public async Task<List<Role>> GetAllAsync()
+    public async Task<List<RoleDto>> GetAllAsync()
     {
         try
         {
-			var result = await _roleRepository.GetAllAsync();
-			return result;
-		}
+            var result = await _roleRepository.GetAllAsync();
+            var mappedResult = _mapper.Map<List<RoleDto>>(result);
+
+            return mappedResult;
+        }
         catch (Exception)
         {
 
-            throw new ArgumentException("No roles could be retrieved.");
+            throw new ArgumentException("No roles retrieved.");
         }
     }
 
-    public async Task<Role> GetAsync(Guid id)
+    public async Task<RoleDto> GetAsync(Guid id)
     {
         try
         {
-			var result = await _roleRepository.GetAsync(id);
-			return result;
-		}
+            var result = await _roleRepository.GetAsync(id);
+            var mappedResult = _mapper.Map<RoleDto>(result);
+
+            return mappedResult;
+        }
         catch (Exception)
         {
 
-            throw new ArgumentException("The role could not be retrieved.");
+            throw new ArgumentException("No role retrieved.");
         }
     }
     // CREATE ROLE
@@ -75,46 +80,52 @@ public class RoleServices : IRoleServices
         }
     }
 
-    // EDIT ROLE
-    public async Task<Role> Edit(Guid id)
+    public async Task<RoleDto> Edit(RoleDto roleDto)
     {
-        var result = await _roleRepository.GetAsync(id);
-        if (result == null)
+        try
         {
-            throw new ArgumentException("No role found.");
-        }
+            var updatedRole = await _roleRepository.Edit(roleDto.Id, roleDto.Name);
+            var result = _mapper.Map<RoleDto>(updatedRole);
 
-        return result;
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The role has not been edited.");
+        }
     }
 
-    public async Task<Role> Edit(Role role)
+    // GET: ROLE DETAILS
+    public async Task<RoleDto> Details(Guid id)
     {
-        if (role == null)
+        try
         {
-            throw new ArgumentException("No role found.");
-        }
-        return await _roleRepository.Edit(role);
-    }
+            var result = await _roleRepository.GetAsync(id);
+            var mappedResult = _mapper.Map<RoleDto>(result);
 
-    // ROLE DETAILS
-    public async Task<Role> Details(Guid id)
-    {
-        var result = await _roleRepository.GetAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException("No role details found.");
+            return mappedResult;
         }
-        return await _roleRepository.Details(id);
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No role details found");
+        }
     }
 
     // DELETE ROLE
-    public async Task<Role> Delete(Guid id)
+    public async Task<RoleDto> Delete(Guid id)
     {
-        var result = await _roleRepository.GetAsync(id);
-        if (result == null)
+        try
         {
-            throw new ArgumentException($"The role with the ID: {id} could not be found.");
+            var roleToDelete = await _roleRepository.Delete(id);
+            var mappedRoleToDelete = _mapper.Map<RoleDto>(roleToDelete);
+            return mappedRoleToDelete;
         }
-        return await _roleRepository.Delete(id);
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No role found to delete.");
+        }
     }
 }

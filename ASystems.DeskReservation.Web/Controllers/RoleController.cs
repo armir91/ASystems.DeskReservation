@@ -62,7 +62,7 @@ public class RoleController : Controller
         }
     }
 
-    // GET: Role/Edit/5
+    // GET: Role/Edit
     public async Task<IActionResult> Edit(Guid id)
     {
         var result = await _roleServices.GetAsync(id);
@@ -76,11 +76,11 @@ public class RoleController : Controller
     // POST: Role/Edit
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Role role)
+    public async Task<IActionResult> Edit(RoleDto roleDto)
     {
         try
         {
-			await _roleServices.Edit(role);
+			await _roleServices.Edit(roleDto);
 			return RedirectToAction("Index");
 		}
         catch (Exception)
@@ -93,12 +93,12 @@ public class RoleController : Controller
     // GET: Role/Details
     public async Task<IActionResult> Details(Guid id)
     {
-        var details = await _roleServices.GetAsync(id);
-        if (details == null)
+        var roleDetails = await _roleServices.Details(id);
+        if (roleDetails == null)
         {
             return BadRequest("The role details could not be found.");
         }
-        return View(details);
+        return View(roleDetails);
     }
 
     // GET: Role/Delete
