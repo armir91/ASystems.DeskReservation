@@ -93,12 +93,12 @@ public class RoleController : Controller
     // GET: Role/Details
     public async Task<IActionResult> Details(Guid id)
     {
-        var details = await _roleServices.GetAsync(id);
-        if (details == null)
+        var roleDetails = await _roleServices.Details(id);
+        if (roleDetails == null)
         {
             return BadRequest("The role details could not be found.");
         }
-        return View(details);
+        return View(roleDetails);
     }
 
     // GET: Role/Delete

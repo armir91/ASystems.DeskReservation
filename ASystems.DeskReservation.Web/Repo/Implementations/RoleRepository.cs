@@ -79,12 +79,14 @@ public class RoleRepository : IRoleRepository
     // ROLE DETAILS
     public async Task<Role> Details(Guid id)
     {
-        var result = await _context.Roles.Where((x => x.Id == id)).FirstOrDefaultAsync();
+        var role = await _roleManager.FindByIdAsync(id.ToString());
+        return role;
+        /*var result = await _context.Roles.Where((x => x.Id == id)).FirstOrDefaultAsync();
         if (result == null)
         {
             throw new ArgumentException("No Role found.");
         }
-        return result;
+        return result;*/
     }
 
     // DELETE ROLE

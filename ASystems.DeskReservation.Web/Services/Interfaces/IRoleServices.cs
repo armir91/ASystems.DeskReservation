@@ -10,5 +10,5 @@ public interface IRoleServices
     Task<RoleDto> Create(RoleDto roleDto);
     Task<RoleDto> Edit(RoleDto roleDto);
     Task<Role> Delete(Guid id);
-    Task<Role> Details(Guid id);
+    Task<RoleDto> Details(Guid id);
 }

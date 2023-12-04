@@ -97,14 +97,12 @@ public class RoleServices : IRoleServices
     }
 
     // GET: ROLE DETAILS
-    public async Task<Role> Details(Guid id)
+    public async Task<RoleDto> Details(Guid id)
     {
         var result = await _roleRepository.GetAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException("No role details found.");
-        }
-        return await _roleRepository.Details(id);
+        var mappedResult = _mapper.Map<RoleDto>(result);
+
+        return mappedResult;
     }
 
     // DELETE ROLE
