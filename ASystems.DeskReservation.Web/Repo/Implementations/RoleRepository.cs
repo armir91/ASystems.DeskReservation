@@ -69,38 +69,52 @@ public class RoleRepository : IRoleRepository
 
     public async Task<Role> Edit(Guid id, string roleName)
     {
-        var role = await _roleManager.FindByIdAsync(id.ToString());
-        role.Name = roleName;
-        await _roleManager.UpdateAsync(role);
+        try
+        {
+            var role = await _roleManager.FindByIdAsync(id.ToString());
+            role.Name = roleName;
+            await _roleManager.UpdateAsync(role);
 
-        return role;
+            return role;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No role to edit found.");
+        }
     }
 
     // ROLE DETAILS
     public async Task<Role> Details(Guid id)
     {
-        var role = await _roleManager.FindByIdAsync(id.ToString());
-        return role;
-        /*var result = await _context.Roles.Where((x => x.Id == id)).FirstOrDefaultAsync();
-        if (result == null)
+        try
         {
-            throw new ArgumentException("No Role found.");
+            var role = await _roleManager.FindByIdAsync(id.ToString());
+            return role;
         }
-        return result;*/
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No role details found.");
+        }
     }
 
     // DELETE ROLE
     public async Task<Role> Delete(Guid id)
     {
-        var result = await _context.Roles.FirstOrDefaultAsync(x => x.Id == id);
-        if (result == null)
+        try
         {
-            throw new ArgumentException("No role found.");
-        }
-        _context.Roles.Remove(result);
-        await _context.SaveChangesAsync();
+            var roleToDelete = await _roleManager.FindByIdAsync(id.ToString());
+            await _roleManager.DeleteAsync(roleToDelete);
+            await _context.SaveChangesAsync();
 
-        return result;
+            return roleToDelete;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("The role could not be deleted.");
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-﻿@model ASystems.DeskReservation.Web.Data.Entities.Role
+﻿@model ASystems.DeskReservation.Web.Models.RoleDto
 
 @{
     ViewData["Title"] = "Delete";
@@ -17,18 +17,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NormalizedName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NormalizedName)
-        </dd>
-        <dt class="col-sm-2" hidden>
-            @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-        </dt>
-        <dd class="col-sm-10" hidden>
-            @Html.DisplayFor(model => model.ConcurrencyStamp)
         </dd>
     </dl>
     <hr />

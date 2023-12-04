@@ -99,20 +99,33 @@ public class RoleServices : IRoleServices
     // GET: ROLE DETAILS
     public async Task<RoleDto> Details(Guid id)
     {
-        var result = await _roleRepository.GetAsync(id);
-        var mappedResult = _mapper.Map<RoleDto>(result);
+        try
+        {
+            var result = await _roleRepository.GetAsync(id);
+            var mappedResult = _mapper.Map<RoleDto>(result);
 
-        return mappedResult;
+            return mappedResult;
+        }
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No role details found");
+        }
     }
 
     // DELETE ROLE
-    public async Task<Role> Delete(Guid id)
+    public async Task<RoleDto> Delete(Guid id)
     {
-        var result = await _roleRepository.GetAsync(id);
-        if (result == null)
+        try
         {
-            throw new ArgumentException($"The role with the ID: {id} could not be found.");
+            var roleToDelete = await _roleRepository.Delete(id);
+            var mappedRoleToDelete = _mapper.Map<RoleDto>(roleToDelete);
+            return mappedRoleToDelete;
         }
-        return await _roleRepository.Delete(id);
+        catch (Exception)
+        {
+
+            throw new ArgumentException("No role found to delete.");
+        }
     }
 }

@@ -9,6 +9,6 @@ public interface IRoleServices
     Task<RoleDto> GetAsync(Guid id);
     Task<RoleDto> Create(RoleDto roleDto);
     Task<RoleDto> Edit(RoleDto roleDto);
-    Task<Role> Delete(Guid id);
+    Task<RoleDto> Delete(Guid id);
     Task<RoleDto> Details(Guid id);
 }
