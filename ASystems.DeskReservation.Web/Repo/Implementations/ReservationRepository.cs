@@ -120,8 +120,7 @@ public class ReservationRepository : IReservationRepository
     public async Task<List<Reservation>> GetUserReservations(Guid userId, DateTime startDate, DateTime endDate)
     {
         var result = await _context.Reservations
-            .Where(r => r.UserId == userId &&
-                    r.StartDate < endDate && startDate < r.EndDate)
+            .Where(r => r.UserId == userId && r.StartDate <= endDate && startDate <= r.EndDate)
             .ToListAsync();
 
         return result;

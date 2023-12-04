@@ -40,7 +40,7 @@ public class DeskRepository : IDeskRepository
             .OrderBy(x => x.Name)
             .Include(x => x.Reservations)
             .Where(x => !x.Reservations
-            .Any(r => r.StartDate < EndDate && StartDate < r.EndDate))
+            .Any(r => r.StartDate <= EndDate && StartDate <= r.EndDate))
             .ToListAsync();
 
             return result;
