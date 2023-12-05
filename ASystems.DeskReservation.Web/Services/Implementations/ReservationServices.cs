@@ -2,16 +2,22 @@
 using ASystems.DeskReservation.Web.Repo.Implementations;
 using ASystems.DeskReservation.Web.Repo.Interfaces;
 using ASystems.DeskReservation.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace ASystems.DeskReservation.Web.Services.Implementations;
 
 public class ReservationServices : IReservationServices
 {
     private readonly IReservationRepository _reservationRepository;
+    private readonly UserManager<User> _userManager;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ReservationServices(IReservationRepository reservationRepository)
+    public ReservationServices(IReservationRepository reservationRepository, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
     {
         _reservationRepository = reservationRepository;
+        _userManager = userManager;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     // GET ALL RESERVATIONS
@@ -19,8 +25,17 @@ public class ReservationServices : IReservationServices
     {
         try
         {
+            var currentLoggedInUserId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _reservationRepository.GetAllAsync();
-            return result;
+
+            if (_httpContextAccessor.HttpContext.User.IsInRole("Admin"))
+            {
+                return result;
+            }
+            var loggedInUserData = result.Where(x => x.UserId.ToString() == currentLoggedInUserId).ToList();
+
+            return loggedInUserData;
+
         }
         catch (Exception)
         {
