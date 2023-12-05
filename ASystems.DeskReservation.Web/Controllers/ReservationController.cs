@@ -26,16 +26,8 @@ public class ReservationController : Controller
     {
         try
         {
-            var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _reservationServices.GetAll();
-
-            if (User.IsInRole("Admin"))
-            {
-                return View(result);
-            }
-            var loggedInUserData = result.Where(x => x.UserId.ToString() == currentLoggedInUserId).ToList();
-
-            return View(loggedInUserData);
+            return View(result);
         }
         catch (Exception)
         {
