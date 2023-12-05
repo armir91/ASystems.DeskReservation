@@ -49,7 +49,8 @@
 </div>
 <hr />
 <div>
-    @if(Model.Status == ASystems.DeskReservation.Web.Data.Entities.ReservationStatus.Pending)
+    @* @if(Model.Status == ASystems.DeskReservation.Web.Data.Entities.ReservationStatus.Pending) *@
+    @if(User.IsInRole("Admin"))
     {
         <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-s btn-primary">Edit</a>
     }

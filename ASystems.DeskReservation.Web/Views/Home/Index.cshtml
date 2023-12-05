@@ -1,33 +1,5 @@
 ﻿
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-        color: #333;
-    }
-
-    header {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 1em 0;
-    }
-
-    section {
-        max-width: 800px;
-        margin: 2em auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-        color: #333;
-    }
-
     ul {
         list-style-type: none;
         padding: 0;
@@ -41,21 +13,20 @@
 </style>
 
 
-
-<body>
     <div class="text-center">
         <h1>ASystems Desk Reservation</h1>
-    </div>
     <section>
-        <ul>
-            <li>Reservations must be submitted at least 24 hours before.</li>
-            <li>The Admin is responsible for the approval of your reservation.</li>
-            <li>Each reservation is limited to a maximum of 5 days.</li>
-            <li>Duplicate reservations are not allowed</li>
-            <li>Overlapping reservations are not allowed</li>
-            <li>Reservation cannot be changed after reservation has been approved.</li>
-            <li>Late arrivals may result in the forfeiture of the reservation.</li>
-            <li>Reservations are subject to availability.</li>
+        <ul class="list-group list-group-numbered">
+            <li class="list-group-item list-group-item-success">Reservations must be submitted 24 hours before.</li>
+            <li class="list-group-item list-group-item-info">The Admin is responsible for the approval of your reservation.</li>
+            <li class="list-group-item list-group-item-success">Each reservation is limited to a maximum of 5 days.</li>
+            <li class="list-group-item list-group-item-info">Duplicate reservations are not allowed.</li>
+            <li class="list-group-item list-group-item-success">Overlapping reservations are not allowed.</li>
+            <li class="list-group-item list-group-item-info">Reservation cannot be changed after reservation has been submitted.</li>
+            <li class="list-group-item list-group-item-success">Please contact the Admin for a reservation modification.</li>
+            <li class="list-group-item list-group-item-info">Late arrivals may result in the forfeiture of the reservation.</li>
+            <li class="list-group-item list-group-item-success">Every employee must perform a check in through teh Admin desk upon arrival.</li>
         </ul>
     </section>
-</body>
+    </div>
+    
