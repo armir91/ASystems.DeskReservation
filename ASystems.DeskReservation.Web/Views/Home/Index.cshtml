@@ -1,8 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Home";
-}
+﻿
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
 
-<div class="text-center">
-    <h1 class="display-4">ASystems Desk Reservation App</h1>
-    <p>Hello team! This is a simple WEB APP that simplifies the process of booking your working environment at office!</p>
-</div>
+    header {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1em 0;
+    }
+
+    section {
+        max-width: 800px;
+        margin: 2em auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+    }
+</style>
+
+
+
+<body>
+    <div class="text-center">
+        <h1>ASystems Desk Reservation</h1>
+    </div>
+    <section>
+        <ul>
+            <li>Reservations must be submitted at least 24 hours before.</li>
+            <li>The Admin is responsible for the approval of your reservation.</li>
+            <li>Each reservation is limited to a maximum of 5 days.</li>
+            <li>Duplicate reservations are not allowed</li>
+            <li>Overlapping reservations are not allowed</li>
+            <li>Reservation cannot be changed after reservation has been approved.</li>
+            <li>Late arrivals may result in the forfeiture of the reservation.</li>
+            <li>Reservations are subject to availability.</li>
+        </ul>
+    </section>
+</body>
