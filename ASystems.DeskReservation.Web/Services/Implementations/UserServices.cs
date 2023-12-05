@@ -34,16 +34,6 @@ public class UserServices : IUserServices
     }
 
     // EDIT USER
-    public async Task<User> Edit(Guid id)
-    {
-        var result = await _userRepository.GetAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException("The user could not be found.");
-        }
-        return result;
-    }
-
     public async Task<User> Edit(UserDto userDto)
     {
         var userToEdit = await _userRepository.GetAsync(userDto.Id);

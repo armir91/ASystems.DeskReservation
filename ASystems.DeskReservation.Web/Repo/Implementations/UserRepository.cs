@@ -29,16 +29,6 @@ public class UserRepository : IUserRepository
     }
 
     // EDIT USER
-    public async Task<User> Edit(Guid id)
-    {
-        var result = await _context.Users.FindAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException("No user found");
-        }
-        return result;
-    }
-
     public async Task<User> Edit(User user)
     {
         if (user == null)
