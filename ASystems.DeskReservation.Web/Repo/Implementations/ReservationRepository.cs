@@ -68,18 +68,6 @@ public class ReservationRepository : IReservationRepository
     }
 
     // EDIT: Reservation
-    public async Task<Reservation> Edit(Guid id)
-    {
-        var result = await _context.Reservations.FindAsync(id);
-        
-        if (result == null)
-        {
-            throw new ArgumentException("No reservation found");
-        }
-        return result;
-    }
-
-
     public async Task<Reservation> Edit(Reservation reservation)
     {
         if (reservation == null)

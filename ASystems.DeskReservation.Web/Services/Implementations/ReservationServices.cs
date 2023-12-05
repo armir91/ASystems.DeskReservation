@@ -59,17 +59,6 @@ public class ReservationServices : IReservationServices
     }
 
     // EDIT RESERVATION
-    public async Task<Reservation> Edit(Guid id)
-    {
-        var result = await _reservationRepository.GetAsync(id);
-        if (result == null)
-        {
-            throw new ArgumentException("The reservation could not be found.");
-        }
-
-        return result;
-    }
-
     public async Task<Reservation> Edit(Reservation reservation)
     {
         if (reservation == null)
