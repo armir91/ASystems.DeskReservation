@@ -57,18 +57,6 @@ public class DeskServices : IDeskServices
     }
 
     // EDIT DESK
-
-    public async Task<Desk> Edit(Guid id)
-    {
-        var desk = await _deskRepository.GetAsync(id);
-        if (desk == null)
-        {
-            throw new ArgumentException("The desk could not be found.");
-        }
-
-        return desk;
-    }
-
     public async Task<Desk> Edit(Desk desk)
     {
         if (desk == null)

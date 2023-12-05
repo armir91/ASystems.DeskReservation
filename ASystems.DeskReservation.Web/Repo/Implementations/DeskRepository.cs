@@ -81,16 +81,6 @@ public class DeskRepository : IDeskRepository
         }
     }
     // EDIT
-    public async Task<Desk> Edit(Guid id)
-    {
-        var desk = await _context.Desks.FindAsync(id);
-        if (desk == null)
-        {
-            throw new ArgumentException("There is no desk");
-        }
-        return desk;
-    }
-
     public async Task<Desk> Edit(Desk desk)
     {
         if (desk == null)
