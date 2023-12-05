@@ -41,15 +41,15 @@ public class ReservationController : Controller
         try
         {
             var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var usersFirstName = await _userServices.GetAll();
+            var users = await _userServices.GetAll();
 
             if (User.IsInRole("Admin"))
             {
-                ViewBag.Users = usersFirstName;
+                ViewBag.Users = users;
             }
             else
             {
-                ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+                ViewBag.Users = users.Where(x => x.Id.ToString() == currentLoggedInUserId);
             }
 
             var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now.AddDays(1);
@@ -73,7 +73,6 @@ public class ReservationController : Controller
         }
         catch (Exception)
         {
-
             throw new ArgumentException("The reservation was not created.");
         }
     }
@@ -86,24 +85,20 @@ public class ReservationController : Controller
         try
         {
             var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var existingReservations = await _reservationServices.GetUserReservations(Guid.Parse(currentLoggedInUserId), reservation.StartDate, reservation.EndDate);
-
             if (existingReservations.Count > 0)
             {
                 ModelState.AddModelError(string.Empty, "User has already a reservation for the searched days.");
 
-                var usersFirstName = await _userServices.GetAll();
-
+                var users = await _userServices.GetAll();
                 if (User.IsInRole("Admin"))
                 {
-                    ViewBag.Users = usersFirstName;
+                    ViewBag.Users = users;
                 }
                 else
                 {
-                    ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+                    ViewBag.Users = users.Where(x => x.Id.ToString() == currentLoggedInUserId);
                 }
-
                 var desks = await _deskServices.GetFreeDesks(reservation.StartDate, reservation.EndDate);
                 ViewBag.Desks = desks;
 
@@ -123,7 +118,6 @@ public class ReservationController : Controller
         }
         catch (Exception)
         {
-
             throw new ArgumentException("The reservation could not be saved in the DataBase.");
         }
     }
@@ -134,15 +128,15 @@ public class ReservationController : Controller
         try
         {
             var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var usersFirstName = await _userServices.GetAll();
+            var users = await _userServices.GetAll();
 
             if (User.IsInRole("Admin"))
             {
-                ViewBag.Users = usersFirstName;
+                ViewBag.Users = users;
             }
             else
             {
-                ViewBag.Users = usersFirstName.Where(x => x.Id.ToString() == currentLoggedInUserId);
+                ViewBag.Users = users.Where(x => x.Id.ToString() == currentLoggedInUserId);
             }
 
             var desks = await _deskServices.GetAll();
@@ -158,7 +152,6 @@ public class ReservationController : Controller
         }
         catch (Exception)
         {
-
             throw new ArgumentException("Could not get the reservation details for modification.");
         }
     }
@@ -170,8 +163,8 @@ public class ReservationController : Controller
     {
         try
         {
-            var usersFirstName = await _userServices.GetAll();
-            ViewBag.Users = usersFirstName;
+            var users = await _userServices.GetAll();
+            ViewBag.Users = users;
 
             var desks = await _deskServices.GetAll();
             ViewBag.Desks = desks;
@@ -181,7 +174,6 @@ public class ReservationController : Controller
         }
         catch (Exception)
         {
-
             throw new ArgumentException("The reservation could not be modified.");
         }
     }

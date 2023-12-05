@@ -10,13 +10,11 @@ namespace ASystems.DeskReservation.Web.Services.Implementations;
 public class ReservationServices : IReservationServices
 {
     private readonly IReservationRepository _reservationRepository;
-    private readonly UserManager<User> _userManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ReservationServices(IReservationRepository reservationRepository, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+    public ReservationServices(IReservationRepository reservationRepository, IHttpContextAccessor httpContextAccessor)
     {
         _reservationRepository = reservationRepository;
-        _userManager = userManager;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -35,11 +33,9 @@ public class ReservationServices : IReservationServices
             var loggedInUserData = result.Where(x => x.UserId.ToString() == currentLoggedInUserId).ToList();
 
             return loggedInUserData;
-
         }
         catch (Exception)
         {
-
             throw new ArgumentException("No reservations found.");
         }
     }
@@ -68,7 +64,6 @@ public class ReservationServices : IReservationServices
         }
         catch (Exception)
         {
-
             throw new ArgumentException("The reservation could not be created.");
         }
     }
@@ -107,8 +102,14 @@ public class ReservationServices : IReservationServices
 
     public async Task<List<Reservation>> GetUserReservations(Guid userId, DateTime startDate, DateTime endDate)
     {
-        var result = await _reservationRepository.GetUserReservations(userId, startDate, endDate);
-
-        return result;
+        try
+        {
+            var result = await _reservationRepository.GetUserReservations(userId, startDate, endDate);
+            return result;
+        }
+        catch (Exception)
+        {
+            throw new ArgumentException("No reservations found.");
+        }
     }
 }
