@@ -22,15 +22,14 @@ public class ReservationRepository : IReservationRepository
         try
         {
             var result = await _context.Reservations
-            .Include(x => x.Desk)
-            .Include(x => x.User)
-            .OrderBy(x => x.ReservedTime)
-            .ToListAsync();
+                .Include(x => x.Desk)
+                .Include(x => x.User)
+                .OrderBy(x => x.ReservedTime)
+                .ToListAsync();
             return result;
         }
         catch (Exception)
         {
-
             throw new ArgumentException("Reservation data could not be retrieved.");
         }
     }
@@ -47,7 +46,6 @@ public class ReservationRepository : IReservationRepository
         }
         catch (Exception)
         {
-
             throw new ArgumentException($"The reservation with ID: {id} could not be retrieved.");
         }
     }
@@ -59,6 +57,7 @@ public class ReservationRepository : IReservationRepository
         {
             await _context.Reservations.AddAsync(reservation);
             await _context.SaveChangesAsync();
+
             return reservation;
         }
         catch (Exception)
