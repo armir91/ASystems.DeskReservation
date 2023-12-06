@@ -60,10 +60,13 @@
                 @Html.DisplayFor(modelItem => item.Desk.Name)
             </td>
             <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-s btn-info">Details</a> 
                     @if(User.IsInRole("Admin")){
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-s btn-danger">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-s btn-primary">Edit</a>
+                    }
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-s btn-info">Details</a>
+                    @if (item.Status == ASystems.DeskReservation.Web.Data.Entities.ReservationStatus.Pending || User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-s btn-danger">Delete</a>
                     }
             </td>
         </tr>
