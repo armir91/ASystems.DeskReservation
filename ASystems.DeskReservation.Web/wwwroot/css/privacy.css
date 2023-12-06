@@ -4,6 +4,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 20px;
+    text-align: center;
 }
 
 h1 {
@@ -17,15 +18,11 @@ p {
 .container {
     max-width: 800px;
     margin: auto;
+    text-align: center;
 }
 
 .content {
     background: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
-}
-
-footer {
-    margin-top: 50px;
-    text-align: center;
 }
