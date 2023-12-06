@@ -41,16 +41,6 @@ public class ReservationController : Controller
         try
         {
             var currentLoggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var users = await _userServices.GetAll();
-
-            if (User.IsInRole("Admin"))
-            {
-                ViewBag.Users = users;
-            }
-            else
-            {
-                ViewBag.Users = users.Where(x => x.Id.ToString() == currentLoggedInUserId);
-            }
 
             var startDate = StartDate.HasValue ? StartDate.Value : DateTime.Now.AddDays(1);
             var endDate = EndDate.HasValue ? EndDate.Value : startDate.AddDays(5);
@@ -90,15 +80,6 @@ public class ReservationController : Controller
             {
                 ModelState.AddModelError(string.Empty, "User has already a reservation for the searched days.");
 
-                var users = await _userServices.GetAll();
-                if (User.IsInRole("Admin"))
-                {
-                    ViewBag.Users = users;
-                }
-                else
-                {
-                    ViewBag.Users = users.Where(x => x.Id.ToString() == currentLoggedInUserId);
-                }
                 var desks = await _deskServices.GetFreeDesks(reservation.StartDate, reservation.EndDate);
                 ViewBag.Desks = desks;
 
@@ -108,6 +89,16 @@ public class ReservationController : Controller
             reservation.UserId = Guid.Parse(currentLoggedInUserId);
             reservation.ReservedTime = DateTime.Now;
             reservation.Status = ReservationStatus.Pending;
+
+            if (reservation.DeskId == default(Guid))
+            {
+                ModelState.AddModelError(string.Empty, "Desk is required");
+
+                var desks = await _deskServices.GetFreeDesks(reservation.StartDate, reservation.EndDate);
+                ViewBag.Desks = desks;
+
+                return View(reservation);
+            }
 
             var createdReservation = await _reservationServices.Create(reservation);
             if (User.IsInRole("Admin"))
