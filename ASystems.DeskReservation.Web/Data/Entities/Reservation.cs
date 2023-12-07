@@ -7,6 +7,7 @@ public class Reservation
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public Guid DeskId { get; set; }
+    [DataType(DataType.Date)]
     public DateTime ReservedTime { get; set; }
     [DataType(DataType.Date)]
     public DateTime StartDate { get; set; }
