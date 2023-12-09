@@ -4,7 +4,7 @@ namespace ASystems.DeskReservation.Web.Services.Interfaces;
 
 public interface IReservationServices
 {
-    Task<List<Reservation>> GetAll();
+    Task<List<Reservation>> GetAll(string searchPhrase);
     Task<Reservation> GetAsync(Guid id);
     Task<Reservation> Create(Reservation reservation);
     Task<Reservation> Edit(Reservation reservation);

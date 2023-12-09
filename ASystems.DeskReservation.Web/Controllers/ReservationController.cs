@@ -22,11 +22,11 @@ public class ReservationController : Controller
     }
 
     // GET: Reservations
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchPhrase)
     {
         try
         {
-            var result = await _reservationServices.GetAll();
+            var result = await _reservationServices.GetAll(searchPhrase);
             return View(result);
         }
         catch (Exception)

@@ -17,7 +17,7 @@ public class ReservationRepository : IReservationRepository
     }
 
     // GET ALL: Reservations
-    public async Task<List<Reservation>> GetAllAsync()
+    public async Task<List<Reservation>> GetAllAsync(string searchPhrase)
     {
         try
         {
@@ -26,6 +26,15 @@ public class ReservationRepository : IReservationRepository
                 .Include(x => x.User)
                 .OrderBy(x => x.ReservedTime)
                 .ToListAsync();
+
+            if (!string.IsNullOrEmpty(searchPhrase))
+            {
+                result = result
+                    .Where(r => r.User.FirstName
+                    .Contains(searchPhrase, System.StringComparison.CurrentCultureIgnoreCase) || r.Desk.Name.Contains(searchPhrase, System.StringComparison.CurrentCultureIgnoreCase))
+                .ToList();
+            }
+
             return result;
         }
         catch (Exception)

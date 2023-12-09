@@ -19,12 +19,12 @@ public class ReservationServices : IReservationServices
     }
 
     // GET ALL RESERVATIONS
-    public async Task<List<Reservation>> GetAll()
+    public async Task<List<Reservation>> GetAll(string searchPhrase)
     {
         try
         {
             var currentLoggedInUserId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await _reservationRepository.GetAllAsync();
+            var result = await _reservationRepository.GetAllAsync(searchPhrase);
 
             if (_httpContextAccessor.HttpContext.User.IsInRole("Admin"))
             {
