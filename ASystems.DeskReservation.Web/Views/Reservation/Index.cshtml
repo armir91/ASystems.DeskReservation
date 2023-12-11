@@ -15,12 +15,12 @@
 </p>
 @if (User.IsInRole("Admin"))
 {
-    < form asp - controller = "Reservation" asp - action = "Index" >
-    < p >
-        < input type = "text" name = "SearchPhrase" placeholder = "User or Desk Name" />
-        < input type = "submit" value = "Search" />
-    </ p >
-</ form >
+    <form asp - controller="Reservation" asp-action="Index">
+        <p>
+        <input type = "text" name = "SearchPhrase" placeholder = "User or Desk Name" />
+        <input type = "submit" value = "Search" />
+        </p>
+    </form>
 }
 
 <table class="table">
