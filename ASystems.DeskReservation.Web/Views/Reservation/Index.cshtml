@@ -13,13 +13,15 @@
 <p>
     <a asp-action="Create" class="btn btn-s btn-primary">Create Reservation</a>
 </p>
-
-<form asp-controller="Reservation" asp-action="Index">
-    <p>
-        <input type="text" name="SearchPhrase" placeholder="User or Desk Name" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
+@if (User.IsInRole("Admin"))
+{
+    < form asp - controller = "Reservation" asp - action = "Index" >
+    < p >
+        < input type = "text" name = "SearchPhrase" placeholder = "User or Desk Name" />
+        < input type = "submit" value = "Search" />
+    </ p >
+</ form >
+}
 
 <table class="table">
     <thead class="border-1">
